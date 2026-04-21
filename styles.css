@@ -81,14 +81,35 @@ ul { list-style: none; }
 /* ── SCROLL REVEAL ──────────────────────────────────────── */
 .reveal {
   opacity: 0;
-  transform: translateY(24px);
+  transform: translateY(36px);
+  transition: opacity 0.8s cubic-bezier(0.22, 1, 0.36, 1),
+              transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.reveal.visible { opacity: 1; transform: translateY(0); }
+
+.reveal-left {
+  opacity: 0;
+  transform: translateX(-52px);
+  transition: opacity 0.9s cubic-bezier(0.22, 1, 0.36, 1),
+              transform 0.9s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.reveal-left.visible { opacity: 1; transform: translateX(0); }
+
+.reveal-right {
+  opacity: 0;
+  transform: translateX(52px);
+  transition: opacity 0.9s cubic-bezier(0.22, 1, 0.36, 1),
+              transform 0.9s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.reveal-right.visible { opacity: 1; transform: translateX(0); }
+
+.reveal-scale {
+  opacity: 0;
+  transform: scale(0.88) translateY(20px);
   transition: opacity 0.75s cubic-bezier(0.22, 1, 0.36, 1),
               transform 0.75s cubic-bezier(0.22, 1, 0.36, 1);
 }
-.reveal.visible {
-  opacity: 1;
-  transform: translateY(0);
-}
+.reveal-scale.visible { opacity: 1; transform: scale(1) translateY(0); }
 
 /* ── TYPOGRAPHY ─────────────────────────────────────────── */
 .section-label {
@@ -315,11 +336,15 @@ ul { list-style: none; }
   z-index: 200;
   box-shadow: 0 16px 48px rgba(0,0,0,0.5);
 }
-.nav-dropdown:hover .dropdown-menu {
+.nav-dropdown:hover .dropdown-menu,
+.nav-dropdown.is-open .dropdown-menu {
   opacity: 1;
   pointer-events: all;
   transform: translateX(-50%) translateY(0);
 }
+.nav-dropdown.is-open .nav-dropdown-trigger { color: var(--white); }
+.nav-dropdown.is-open .nav-dropdown-trigger svg,
+.nav-dropdown:hover .nav-dropdown-trigger svg { transform: rotate(180deg); }
 .dropdown-menu a {
   display: flex;
   align-items: baseline;
@@ -344,7 +369,8 @@ ul { list-style: none; }
   transform: translateX(-30%) translateY(-6px);
   padding: 1.25rem;
 }
-.nav-dropdown:hover .dropdown-wide {
+.nav-dropdown:hover .dropdown-wide,
+.nav-dropdown.is-open .dropdown-wide {
   transform: translateX(-30%) translateY(0);
 }
 .dropdown-col { flex: 1; }
@@ -1020,14 +1046,15 @@ ul { list-style: none; }
 }
 .show-full-grid img {
   width: 100%;
-  height: 200px;
-  object-fit: cover;
+  aspect-ratio: 3/2;
+  object-fit: contain;
+  background: rgba(0,0,0,0.25);
   border-radius: 4px;
-  filter: brightness(0.85);
+  filter: brightness(0.88);
   transition: filter 0.3s ease, transform 0.3s ease;
-  cursor: pointer;
+  cursor: zoom-in;
 }
-.show-full-grid img:hover { filter: brightness(1); transform: scale(1.03); position: relative; z-index: 1; }
+.show-full-grid img:hover { filter: brightness(1); transform: scale(1.02); position: relative; z-index: 1; }
 
 .show-expand-btn {
   display: flex;
@@ -1509,6 +1536,52 @@ ul { list-style: none; }
   .travel-grid { grid-template-columns: 1fr; }
   .gallery-grid { grid-template-columns: 1fr 1fr; grid-auto-rows: 150px; }
 }
+
+/* ── LIGHTBOX ───────────────────────────────────────────── */
+.lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 9000;
+  background: rgba(0,0,0,0.94);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.28s ease;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+.lightbox.open { opacity: 1; pointer-events: all; }
+.lightbox-img {
+  max-width: 92vw;
+  max-height: 88vh;
+  object-fit: contain;
+  border-radius: 6px;
+  transform: scale(0.94);
+  transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+  box-shadow: 0 24px 80px rgba(0,0,0,0.7);
+}
+.lightbox.open .lightbox-img { transform: scale(1); }
+.lightbox-close {
+  position: absolute;
+  top: 1.5rem;
+  right: 2rem;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.14);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.4rem;
+  line-height: 1;
+  color: rgba(255,255,255,0.65);
+  cursor: pointer;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+.lightbox-close:hover { background: rgba(255,255,255,0.16); color: var(--white); }
 
 /* ── CUSTOM SCROLLBAR ───────────────────────────────────── */
 ::-webkit-scrollbar { width: 6px; }
