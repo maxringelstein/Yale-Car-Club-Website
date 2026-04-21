@@ -191,3 +191,187 @@ window.addEventListener('scroll', () => {
     a.classList.toggle('active', a.getAttribute('href') === `#${current}`);
   });
 }, { passive: true });
+
+/* ── CAMPUS CAR SPOTTING ─── */
+const CLOUD_NAME = 'ddud73mxv';
+const UPLOAD_PRESET = 'Campus Spotting';
+
+const campusPhotoGrid  = document.getElementById('campus-photo-grid');
+const campusLoading    = document.getElementById('campus-loading');
+const campusEmptyState = document.getElementById('campus-empty-state');
+
+async function loadCampusSpots() {
+  try {
+    const res = await fetch('/api/spots');
+    const data = await res.json();
+    campusLoading.style.display = 'none';
+    if (!data.photos || data.photos.length === 0) {
+      campusEmptyState.style.display = 'block';
+    } else {
+      campusPhotoGrid.style.display = 'grid';
+      renderCampusPhotos(data.photos);
+    }
+  } catch {
+    campusLoading.style.display = 'none';
+    campusEmptyState.style.display = 'block';
+  }
+}
+
+function renderCampusPhotos(photos) {
+  campusPhotoGrid.innerHTML = '';
+  photos.forEach(photo => {
+    const item = document.createElement('div');
+    item.className = 'campus-photo-item';
+    const img = document.createElement('img');
+    img.src = photo.url;
+    img.alt = photo.caption || 'Campus car spot';
+    img.loading = 'lazy';
+    attachLightbox(img);
+    item.appendChild(img);
+    if (photo.caption) {
+      const cap = document.createElement('div');
+      cap.className = 'campus-photo-caption';
+      cap.textContent = photo.caption;
+      item.appendChild(cap);
+    }
+    campusPhotoGrid.appendChild(item);
+  });
+}
+
+/* modal wiring */
+const spotModalOverlay   = document.getElementById('spot-modal-overlay');
+const spotModalClose     = document.getElementById('spot-modal-close');
+const campusUploadBtn    = document.getElementById('campus-upload-btn');
+const spotFileInput      = document.getElementById('spot-file-input');
+const spotDropZone       = document.getElementById('spot-drop-zone');
+const spotDropIdle       = document.getElementById('spot-drop-idle');
+const spotPreviewImg     = document.getElementById('spot-preview-img');
+const spotCaptionInput   = document.getElementById('spot-caption-input');
+const spotUploadBtn      = document.getElementById('spot-upload-btn');
+const spotUploadBtnText  = document.getElementById('spot-upload-btn-text');
+const spotStatus         = document.getElementById('spot-status');
+
+let selectedSpotFile = null;
+
+function openSpotModal() {
+  spotModalOverlay.classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeSpotModal() {
+  spotModalOverlay.classList.remove('open');
+  document.body.style.overflow = '';
+  resetSpotModal();
+}
+function resetSpotModal() {
+  selectedSpotFile = null;
+  spotFileInput.value = '';
+  spotPreviewImg.style.display = 'none';
+  spotPreviewImg.src = '';
+  spotDropIdle.style.display = 'flex';
+  spotCaptionInput.value = '';
+  spotUploadBtn.disabled = true;
+  spotStatus.textContent = '';
+  spotStatus.className = 'spot-status';
+  spotUploadBtnText.textContent = 'Upload Photo';
+}
+
+campusUploadBtn.addEventListener('click', openSpotModal);
+spotModalClose.addEventListener('click', closeSpotModal);
+spotModalOverlay.addEventListener('click', e => {
+  if (e.target === spotModalOverlay) closeSpotModal();
+});
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape' && spotModalOverlay.classList.contains('open')) closeSpotModal();
+});
+
+/* drag-and-drop */
+spotDropZone.addEventListener('dragover', e => {
+  e.preventDefault();
+  spotDropZone.classList.add('drag-over');
+});
+spotDropZone.addEventListener('dragleave', () => spotDropZone.classList.remove('drag-over'));
+spotDropZone.addEventListener('drop', e => {
+  e.preventDefault();
+  spotDropZone.classList.remove('drag-over');
+  const file = e.dataTransfer.files[0];
+  if (file && file.type.startsWith('image/')) handleSpotFile(file);
+});
+spotFileInput.addEventListener('change', () => {
+  if (spotFileInput.files[0]) handleSpotFile(spotFileInput.files[0]);
+});
+
+function handleSpotFile(file) {
+  selectedSpotFile = file;
+  spotPreviewImg.src = URL.createObjectURL(file);
+  spotPreviewImg.style.display = 'block';
+  spotDropIdle.style.display = 'none';
+  spotUploadBtn.disabled = false;
+}
+
+/* client-side compression */
+function compressImage(file, maxWidth = 1600, quality = 0.82) {
+  return new Promise(resolve => {
+    const reader = new FileReader();
+    reader.onload = e => {
+      const img = new Image();
+      img.onload = () => {
+        let { width, height } = img;
+        if (width > maxWidth) {
+          height = Math.round(height * maxWidth / width);
+          width = maxWidth;
+        }
+        const canvas = document.createElement('canvas');
+        canvas.width = width;
+        canvas.height = height;
+        canvas.getContext('2d').drawImage(img, 0, 0, width, height);
+        canvas.toBlob(resolve, 'image/jpeg', quality);
+      };
+      img.src = e.target.result;
+    };
+    reader.readAsDataURL(file);
+  });
+}
+
+/* upload */
+spotUploadBtn.addEventListener('click', async () => {
+  if (!selectedSpotFile) return;
+  spotUploadBtn.disabled = true;
+  spotUploadBtnText.textContent = 'Compressing…';
+
+  try {
+    const compressed = await compressImage(selectedSpotFile);
+    spotUploadBtnText.textContent = 'Uploading…';
+
+    const fd = new FormData();
+    fd.append('file', compressed, 'spot.jpg');
+    fd.append('upload_preset', UPLOAD_PRESET);
+    fd.append('folder', 'campus-spots');
+    const caption = spotCaptionInput.value.trim();
+    if (caption) fd.append('context', `caption=${caption}`);
+
+    const res = await fetch(`https://api.cloudinary.com/v1_1/${CLOUD_NAME}/image/upload`, {
+      method: 'POST',
+      body: fd
+    });
+    if (!res.ok) throw new Error('Upload failed');
+
+    spotStatus.textContent = "Photo submitted — it's live on the site!";
+    spotStatus.className = 'spot-status success';
+
+    setTimeout(() => {
+      closeSpotModal();
+      campusEmptyState.style.display = 'none';
+      campusPhotoGrid.style.display = 'none';
+      campusLoading.style.display = 'flex';
+      loadCampusSpots();
+    }, 1600);
+
+  } catch {
+    spotStatus.textContent = 'Upload failed. Please try again.';
+    spotStatus.className = 'spot-status error';
+    spotUploadBtn.disabled = false;
+    spotUploadBtnText.textContent = 'Upload Photo';
+  }
+});
+
+loadCampusSpots();

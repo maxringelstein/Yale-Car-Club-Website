@@ -390,23 +390,23 @@
         <p class="section-subtitle">Interesting cars spotted on and around Yale's campus.</p>
       </div>
 
-      <div class="campus-placeholder reveal">
-        <div class="campus-placeholder-inner">
-          <img src="brand_assets/general/Logo.png" alt="YCAR" class="campus-placeholder-logo" />
-          <h3>Photos Coming Soon</h3>
-          <p>We're building out our campus car spotting archive. Check back after the next sighting — or submit your own.</p>
-          <a href="https://docs.google.com/forms/d/1A9ub5Z3_A2kJhfiV7t-T4CUdF1gNd5C-EftwfNfkDtM/viewform" target="_blank" rel="noopener" class="btn btn-outline">Submit a Spot</a>
-        </div>
+      <div class="campus-upload-bar reveal">
+        <p>Spotted something cool on campus? Submit a photo and it'll appear here.</p>
+        <button class="btn btn-outline" id="campus-upload-btn">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+          Submit a Spot
+        </button>
+      </div>
 
-        <div class="campus-grid-placeholder">
-          <div class="campus-grid-slot">
-            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
-          </div>
-          <div class="campus-grid-slot"></div>
-          <div class="campus-grid-slot"></div>
-          <div class="campus-grid-slot"></div>
-          <div class="campus-grid-slot"></div>
-          <div class="campus-grid-slot"></div>
+      <div id="campus-gallery-wrap">
+        <div class="campus-loading" id="campus-loading">
+          <span class="campus-spinner"></span>
+        </div>
+        <div class="campus-photo-grid" id="campus-photo-grid" style="display:none"></div>
+        <div class="campus-empty-state" id="campus-empty-state" style="display:none">
+          <img src="brand_assets/general/Logo.png" alt="YCAR" class="campus-placeholder-logo" />
+          <h3>No spots yet</h3>
+          <p>Be the first to submit a car spotted on campus.</p>
         </div>
       </div>
     </div>
@@ -577,6 +577,34 @@
       </div>
     </div>
   </footer>
+
+  <!-- ── SPOT UPLOAD MODAL ───────────────────────────────── -->
+  <div class="spot-modal-overlay" id="spot-modal-overlay">
+    <div class="spot-modal">
+      <button class="spot-modal-close" id="spot-modal-close">&times;</button>
+      <h3 class="spot-modal-title">Submit a Spot</h3>
+      <p class="spot-modal-sub">Your photo will appear on the site immediately. Auto-compressed before upload.</p>
+
+      <div class="spot-drop-zone" id="spot-drop-zone">
+        <input type="file" id="spot-file-input" accept="image/*" />
+        <div class="spot-drop-idle" id="spot-drop-idle">
+          <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+          <p>Drag &amp; drop or <strong>click to browse</strong></p>
+          <span>JPG, PNG, HEIC — max 20MB</span>
+        </div>
+        <img class="spot-preview-img" id="spot-preview-img" src="" alt="" />
+      </div>
+
+      <input type="text" class="spot-caption-input" id="spot-caption-input"
+        placeholder="Caption — e.g. Ferrari F40 spotted on Hillhouse (optional)" maxlength="120" />
+
+      <button class="btn btn-primary spot-upload-btn" id="spot-upload-btn" disabled>
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+        <span id="spot-upload-btn-text">Upload Photo</span>
+      </button>
+      <p class="spot-status" id="spot-status"></p>
+    </div>
+  </div>
 
   <script src="script.js"></script>
 </body>
