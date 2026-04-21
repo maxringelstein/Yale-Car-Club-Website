@@ -474,7 +474,7 @@ ul { list-style: none; }
 .hero-photo {
   position: absolute;
   inset: -5%;
-  background: url('brand_assets/general/main_porsche.jpeg') center/cover no-repeat;
+  background: url('brand_assets/general/main_porsche.jpg') center/cover no-repeat;
   opacity: 1;
   animation: heroPan 28s ease-in-out infinite alternate;
   will-change: transform;
