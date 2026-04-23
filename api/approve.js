@@ -34,7 +34,7 @@ export default async function handler(req, res) {
     {
       method: 'POST',
       headers: { 'Authorization': `Basic ${auth}`, 'Content-Type': 'application/x-www-form-urlencoded' },
-      body: `context=${encodeURIComponent(contextStr)}`,
+      body: `context=${contextStr}`,
     }
   );
 
