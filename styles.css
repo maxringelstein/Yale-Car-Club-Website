@@ -57,6 +57,7 @@
 /* ── RESET ──────────────────────────────────────────────── */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 html { scroll-behavior: smooth; font-size: 16px; }
+body.lb-open { position: fixed; left: 0; right: 0; overflow-y: scroll; }
 body {
   background: var(--bg);
   color: var(--text);
@@ -1772,10 +1773,13 @@ ul { list-style: none; }
 /* ── LIGHTBOX ───────────────────────────────────────────── */
 .lightbox {
   position: fixed;
-  top: 0; left: 0; right: 0; bottom: 0;
-  width: 100vw; height: 100vh;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
   z-index: 9000;
   background: rgba(0,0,0,0.94);
+  display: flex;
+  align-items: center;
+  justify-content: center;
   opacity: 0;
   pointer-events: none;
   transition: opacity 0.28s ease;
@@ -1784,20 +1788,18 @@ ul { list-style: none; }
 }
 .lightbox.open { opacity: 1; pointer-events: all; }
 .lightbox-img {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%) scale(0.94);
+  display: block;
   max-width: 92vw;
   max-height: 88vh;
   width: auto;
   height: auto;
   object-fit: contain;
   border-radius: 6px;
+  transform: scale(0.94);
   transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
   box-shadow: 0 24px 80px rgba(0,0,0,0.7);
 }
-.lightbox.open .lightbox-img { transform: translate(-50%, -50%) scale(1); }
+.lightbox.open .lightbox-img { transform: scale(1); }
 .lightbox-close {
   position: absolute;
   top: 1.5rem;

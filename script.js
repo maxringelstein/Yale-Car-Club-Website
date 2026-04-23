@@ -109,13 +109,20 @@ lb.innerHTML = `<button class="lightbox-close" aria-label="Close">&times;</butto
 document.body.appendChild(lb);
 const lbImg = lb.querySelector('.lightbox-img');
 
+let _lbScrollY = 0;
 function openLightbox(src, alt) {
   lbImg.src = src;
   lbImg.alt = alt || '';
+  _lbScrollY = window.scrollY;
+  document.body.style.top = `-${_lbScrollY}px`;
+  document.body.classList.add('lb-open');
   lb.classList.add('open');
 }
 function closeLightbox() {
   lb.classList.remove('open');
+  document.body.classList.remove('lb-open');
+  document.body.style.top = '';
+  window.scrollTo(0, _lbScrollY);
   setTimeout(() => { lbImg.src = ''; }, 300);
 }
 lb.querySelector('.lightbox-close').addEventListener('click', closeLightbox);
@@ -124,7 +131,9 @@ document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbo
 
 function attachLightbox(img) {
   img.style.cursor = 'zoom-in';
-  img.addEventListener('click', () => {
+  img.addEventListener('click', e => {
+    e.preventDefault();
+    e.stopPropagation();
     const src = img.src || img.dataset.src;
     if (src) openLightbox(src, img.alt);
   });
