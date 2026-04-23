@@ -4,6 +4,9 @@
 
 /* ── NAV ─── */
 const nav = document.getElementById('nav');
+window.addEventListener('scroll', () => {
+  nav.classList.toggle('scrolled', window.scrollY > 40);
+}, { passive: true });
 
 /* ── NAV: dropdown click toggle ─── */
 document.querySelectorAll('.nav-dropdown-trigger').forEach(btn => {

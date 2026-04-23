@@ -58,7 +58,6 @@
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 html { scroll-behavior: smooth; font-size: 16px; overscroll-behavior: none; }
 body {
-  position: relative;
   background: var(--bg);
   color: var(--text);
   font-family: var(--font-sans);
@@ -202,13 +201,18 @@ ul { list-style: none; }
 
 /* ── NAV ────────────────────────────────────────────────── */
 .nav {
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
   right: 0;
-  z-index: 10;
+  z-index: 9999;
   background: transparent;
-  border-bottom: none;
+  border-bottom: 1px solid transparent;
+  transition: background 0.35s ease, border-color 0.35s ease;
+}
+.nav.scrolled {
+  background: rgba(4, 12, 26, 0.97);
+  border-bottom-color: rgba(255,255,255,0.07);
 }
 
 .nav-inner {
