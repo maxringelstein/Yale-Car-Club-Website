@@ -57,7 +57,6 @@
 /* ── RESET ──────────────────────────────────────────────── */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 html { scroll-behavior: smooth; font-size: 16px; }
-html.no-scroll { overflow: hidden; }
 body {
   background: var(--bg);
   color: var(--text);
@@ -1773,7 +1772,8 @@ ul { list-style: none; }
 /* ── LIGHTBOX ───────────────────────────────────────────── */
 .lightbox {
   position: fixed;
-  inset: 0;
+  top: 0; left: 0; right: 0; bottom: 0;
+  width: 100vw; height: 100vh;
   z-index: 9000;
   background: rgba(0,0,0,0.94);
   display: flex;
@@ -1908,7 +1908,8 @@ ul { list-style: none; }
 /* ── SPOT UPLOAD MODAL ──────────────────────────────────── */
 .spot-modal-overlay {
   position: fixed;
-  inset: 0;
+  top: 0; left: 0; right: 0; bottom: 0;
+  width: 100vw; height: 100vh;
   z-index: 8500;
   background: rgba(0,0,0,0.88);
   backdrop-filter: blur(10px);
