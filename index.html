@@ -437,13 +437,13 @@
       <p class="spot-modal-sub">Snap something interesting on or around Yale's campus? Share it here.</p>
 
       <div class="spot-drop-zone" id="spot-drop-zone">
-        <input type="file" id="spot-file-input" accept="image/*" />
+        <input type="file" id="spot-file-input" accept="image/*" multiple />
         <div class="spot-drop-idle" id="spot-drop-idle">
           <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
-          <p><strong>Click or drag</strong> a photo here</p>
-          <span>JPG, PNG, HEIC — max 20 MB</span>
+          <p><strong>Click or drag</strong> photos here</p>
+          <span>JPG, PNG, HEIC — up to 10 photos, max 20 MB each</span>
         </div>
-        <img class="spot-preview-img" id="spot-preview-img" src="" alt="Preview" />
+        <div class="spot-preview-grid" id="spot-preview-grid"></div>
       </div>
 
       <input class="spot-caption-input" id="spot-caption-input" type="text" placeholder="Caption (optional) — make, model, where you spotted it…" maxlength="120" />

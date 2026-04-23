@@ -575,65 +575,68 @@ const campusUploadBtn    = document.getElementById('campus-upload-btn');
 const spotFileInput      = document.getElementById('spot-file-input');
 const spotDropZone       = document.getElementById('spot-drop-zone');
 const spotDropIdle       = document.getElementById('spot-drop-idle');
-const spotPreviewImg     = document.getElementById('spot-preview-img');
+const spotPreviewGrid    = document.getElementById('spot-preview-grid');
 const spotCaptionInput   = document.getElementById('spot-caption-input');
 const spotUploadBtn      = document.getElementById('spot-upload-btn');
 const spotUploadBtnText  = document.getElementById('spot-upload-btn-text');
 const spotStatus         = document.getElementById('spot-status');
 
-let selectedSpotFile = null;
+let selectedSpotFiles = [];
 
-function openSpotModal() {
-  spotModalOverlay.showModal();
-}
-function closeSpotModal() {
-  spotModalOverlay.close();
-  resetSpotModal();
-}
+function openSpotModal() { spotModalOverlay.showModal(); }
+function closeSpotModal() { spotModalOverlay.close(); resetSpotModal(); }
 function resetSpotModal() {
-  selectedSpotFile = null;
+  selectedSpotFiles = [];
   spotFileInput.value = '';
-  spotPreviewImg.style.display = 'none';
-  spotPreviewImg.src = '';
+  spotPreviewGrid.innerHTML = '';
   spotDropIdle.style.display = 'flex';
   spotCaptionInput.value = '';
   spotUploadBtn.disabled = true;
   spotStatus.textContent = '';
   spotStatus.className = 'spot-status';
-  spotUploadBtnText.textContent = 'Upload Photo';
+  spotUploadBtnText.textContent = 'Upload Photos';
 }
 
 campusUploadBtn.addEventListener('click', openSpotModal);
 spotModalClose.addEventListener('click', closeSpotModal);
-spotModalOverlay.addEventListener('click', e => {
-  if (e.target === spotModalOverlay) closeSpotModal();
-});
+spotModalOverlay.addEventListener('click', e => { if (e.target === spotModalOverlay) closeSpotModal(); });
 document.addEventListener('keydown', e => {
   if (e.key === 'Escape' && spotModalOverlay.open) { e.preventDefault(); closeSpotModal(); }
 });
 
 /* drag-and-drop */
-spotDropZone.addEventListener('dragover', e => {
-  e.preventDefault();
-  spotDropZone.classList.add('drag-over');
-});
+spotDropZone.addEventListener('dragover', e => { e.preventDefault(); spotDropZone.classList.add('drag-over'); });
 spotDropZone.addEventListener('dragleave', () => spotDropZone.classList.remove('drag-over'));
 spotDropZone.addEventListener('drop', e => {
   e.preventDefault();
   spotDropZone.classList.remove('drag-over');
-  const file = e.dataTransfer.files[0];
-  if (file && file.type.startsWith('image/')) handleSpotFile(file);
+  handleSpotFiles([...e.dataTransfer.files].filter(f => f.type.startsWith('image/')));
 });
-spotFileInput.addEventListener('change', () => {
-  if (spotFileInput.files[0]) handleSpotFile(spotFileInput.files[0]);
-});
+spotFileInput.addEventListener('change', () => handleSpotFiles([...spotFileInput.files]));
 
-function handleSpotFile(file) {
-  selectedSpotFile = file;
-  spotPreviewImg.src = URL.createObjectURL(file);
-  spotPreviewImg.style.display = 'block';
-  spotDropIdle.style.display = 'none';
+function handleSpotFiles(files) {
+  if (!files.length) return;
+  selectedSpotFiles = [...selectedSpotFiles, ...files].slice(0, 10);
+  spotDropIdle.style.display = selectedSpotFiles.length ? 'none' : 'flex';
+  renderPreviews();
   spotUploadBtn.disabled = false;
+}
+
+function renderPreviews() {
+  spotPreviewGrid.innerHTML = '';
+  selectedSpotFiles.forEach((file, i) => {
+    const wrap = document.createElement('div');
+    wrap.className = 'spot-preview-thumb';
+    const img = document.createElement('img');
+    img.src = URL.createObjectURL(file);
+    const rm = document.createElement('button');
+    rm.className = 'spot-preview-remove';
+    rm.innerHTML = '&times;';
+    rm.addEventListener('click', e => { e.stopPropagation(); selectedSpotFiles.splice(i, 1); renderPreviews(); if (!selectedSpotFiles.length) { spotDropIdle.style.display = 'flex'; spotUploadBtn.disabled = true; } });
+    wrap.appendChild(img);
+    wrap.appendChild(rm);
+    spotPreviewGrid.appendChild(wrap);
+  });
 }
 
 /* client-side compression */
@@ -644,13 +647,9 @@ function compressImage(file, maxWidth = 1600, quality = 0.82) {
       const img = new Image();
       img.onload = () => {
         let { width, height } = img;
-        if (width > maxWidth) {
-          height = Math.round(height * maxWidth / width);
-          width = maxWidth;
-        }
+        if (width > maxWidth) { height = Math.round(height * maxWidth / width); width = maxWidth; }
         const canvas = document.createElement('canvas');
-        canvas.width = width;
-        canvas.height = height;
+        canvas.width = width; canvas.height = height;
         canvas.getContext('2d').drawImage(img, 0, 0, width, height);
         canvas.toBlob(resolve, 'image/jpeg', quality);
       };
@@ -662,29 +661,26 @@ function compressImage(file, maxWidth = 1600, quality = 0.82) {
 
 /* upload */
 spotUploadBtn.addEventListener('click', async () => {
-  if (!selectedSpotFile) return;
+  if (!selectedSpotFiles.length) return;
   spotUploadBtn.disabled = true;
-  spotUploadBtnText.textContent = 'Compressing…';
+  const caption = spotCaptionInput.value.trim();
+  const ctx = caption ? `status=pending|caption=${caption}` : 'status=pending';
+  const total = selectedSpotFiles.length;
 
   try {
-    const compressed = await compressImage(selectedSpotFile);
-    spotUploadBtnText.textContent = 'Uploading…';
+    for (let i = 0; i < total; i++) {
+      spotUploadBtnText.textContent = `Uploading ${i + 1} of ${total}…`;
+      const compressed = await compressImage(selectedSpotFiles[i]);
+      const fd = new FormData();
+      fd.append('file', compressed, 'spot.jpg');
+      fd.append('upload_preset', UPLOAD_PRESET);
+      fd.append('folder', 'campus-spots');
+      fd.append('context', ctx);
+      const res = await fetch(`https://api.cloudinary.com/v1_1/${CLOUD_NAME}/image/upload`, { method: 'POST', body: fd });
+      if (!res.ok) throw new Error('Upload failed');
+    }
 
-    const fd = new FormData();
-    fd.append('file', compressed, 'spot.jpg');
-    fd.append('upload_preset', UPLOAD_PRESET);
-    fd.append('folder', 'campus-spots');
-    const caption = spotCaptionInput.value.trim();
-    const ctx = caption ? `status=pending|caption=${caption}` : 'status=pending';
-    fd.append('context', ctx);
-
-    const res = await fetch(`https://api.cloudinary.com/v1_1/${CLOUD_NAME}/image/upload`, {
-      method: 'POST',
-      body: fd
-    });
-    if (!res.ok) throw new Error('Upload failed');
-
-    spotStatus.textContent = 'Photo submitted! It will appear after review.';
+    spotStatus.textContent = `${total} photo${total > 1 ? 's' : ''} submitted! They'll appear after review.`;
     spotStatus.className = 'spot-status success';
 
     setTimeout(() => {
