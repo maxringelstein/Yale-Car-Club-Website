@@ -471,6 +471,18 @@ function buildShowBlock(event) {
   return block;
 }
 
+function injectRandomPhotos(allPhotos) {
+  if (!allPhotos.length) return;
+  const shuffled = [...allPhotos].sort(() => Math.random() - 0.5);
+  const targets = [
+    document.querySelector('.about-img-back'),
+    document.querySelector('.about-img-front'),
+    document.querySelector('.event-featured-img'),
+    ...document.querySelectorAll('.join-photo-grid img'),
+  ].filter(Boolean);
+  targets.forEach((el, i) => { if (shuffled[i]) el.src = shuffled[i]; });
+}
+
 function populateStrip(events) {
   const track = document.getElementById('strip-track');
   if (!track) return;
@@ -489,7 +501,9 @@ async function loadEvents() {
   try {
     const res = await fetch('/api/events');
     const { events } = await res.json();
+    const allPhotos = (events || []).flatMap(e => e.photos);
     populateStrip(events || []);
+    injectRandomPhotos(allPhotos);
     container.innerHTML = '';
     if (!events || events.length === 0) {
       container.innerHTML = '<p style="color:var(--text-muted);text-align:center;padding:2rem 0">No events yet.</p>';
