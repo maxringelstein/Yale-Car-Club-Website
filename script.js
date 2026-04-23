@@ -600,8 +600,6 @@ function resetSpotModal() {
 }
 
 campusUploadBtn.addEventListener('click', openSpotModal);
-const heroUploadBtn = document.getElementById('hero-upload-btn');
-if (heroUploadBtn) heroUploadBtn.addEventListener('click', openSpotModal);
 spotModalClose.addEventListener('click', closeSpotModal);
 spotModalOverlay.addEventListener('click', e => {
   if (e.target === spotModalOverlay) closeSpotModal();
