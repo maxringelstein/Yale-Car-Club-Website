@@ -14,12 +14,27 @@ export default async function handler(req, res) {
   const auth = Buffer.from(`${API_KEY}:${API_SECRET}`).toString('base64');
   const newStatus = action === 'reject' ? 'rejected' : 'approved';
 
+  // Fetch existing context first so we preserve the caption
+  const getRes = await fetch(
+    `https://api.cloudinary.com/v1_1/${CLOUD_NAME}/resources/image/upload/${encodeURIComponent(id)}?context=true`,
+    { headers: { 'Authorization': `Basic ${auth}` } }
+  );
+  let existingCaption = '';
+  if (getRes.ok) {
+    const info = await getRes.json();
+    existingCaption = info.context?.custom?.caption || '';
+  }
+
+  const contextStr = existingCaption
+    ? `status=${newStatus}|caption=${existingCaption}`
+    : `status=${newStatus}`;
+
   const response = await fetch(
     `https://api.cloudinary.com/v1_1/${CLOUD_NAME}/resources/image/upload/${encodeURIComponent(id)}`,
     {
       method: 'POST',
       headers: { 'Authorization': `Basic ${auth}`, 'Content-Type': 'application/x-www-form-urlencoded' },
-      body: `context=status=${newStatus}`,
+      body: `context=${encodeURIComponent(contextStr)}`,
     }
   );
 
