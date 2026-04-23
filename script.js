@@ -580,10 +580,10 @@ const spotStatus         = document.getElementById('spot-status');
 let selectedSpotFile = null;
 
 function openSpotModal() {
-  spotModalOverlay.classList.add('open');
+  spotModalOverlay.showModal();
 }
 function closeSpotModal() {
-  spotModalOverlay.classList.remove('open');
+  spotModalOverlay.close();
   resetSpotModal();
 }
 function resetSpotModal() {
@@ -600,12 +600,14 @@ function resetSpotModal() {
 }
 
 campusUploadBtn.addEventListener('click', openSpotModal);
+const heroUploadBtn = document.getElementById('hero-upload-btn');
+if (heroUploadBtn) heroUploadBtn.addEventListener('click', openSpotModal);
 spotModalClose.addEventListener('click', closeSpotModal);
 spotModalOverlay.addEventListener('click', e => {
   if (e.target === spotModalOverlay) closeSpotModal();
 });
 document.addEventListener('keydown', e => {
-  if (e.key === 'Escape' && spotModalOverlay.classList.contains('open')) closeSpotModal();
+  if (e.key === 'Escape' && spotModalOverlay.open) { e.preventDefault(); closeSpotModal(); }
 });
 
 /* drag-and-drop */

@@ -104,6 +104,10 @@
       <div class="hero-actions reveal">
         <a href="#join" class="btn btn-primary btn-hero">Join Us</a>
         <a href="#events" class="btn btn-outline btn-hero">Upcoming Events</a>
+        <button class="btn btn-outline btn-hero" id="hero-upload-btn">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+          Submit a Photo
+        </button>
       </div>
       <div class="hero-stats reveal">
         <div class="stat">
@@ -138,7 +142,7 @@
     <div class="container">
       <div class="about-inner">
         <div class="about-text reveal-left">
-          <div class="section-label reveal">About YCAR</div>
+          <div class="section-label reveal">About Yale Car Club — A Student-Run Organization</div>
           <h2 class="section-title reveal">About <em>YCAR</em></h2>
           <p class="about-body reveal">
             Yale Car Club was founded in 2026 to bring together students, alumni, and industry professionals around a shared interest in cars. We organize events throughout the year — from casual meetups to curated car shows — and serve as a hub for automotive culture on campus.
@@ -426,8 +430,8 @@
   </section>
 
   <!-- ── SPOT UPLOAD MODAL ─────────────────────────────────── -->
-  <div class="spot-modal-overlay" id="spot-modal-overlay">
-    <div class="spot-modal">
+  <dialog class="spot-modal" id="spot-modal-overlay">
+    <div class="spot-modal-inner">
       <button class="spot-modal-close" id="spot-modal-close" aria-label="Close">&times;</button>
       <h2 class="spot-modal-title">Submit a Spot</h2>
       <p class="spot-modal-sub">Snap something interesting on or around Yale's campus? Share it here.</p>
@@ -450,7 +454,7 @@
       </button>
       <p class="spot-status" id="spot-status"></p>
     </div>
-  </div>
+  </dialog>
 
   <!-- ── GET INVOLVED ─────────────────────────────────────── -->
   <section class="join" id="join">

@@ -1829,19 +1829,25 @@ dialog.lightbox::backdrop {
 /* ── CAMPUS SPOTTING: upload bar ────────────────────────── */
 .campus-upload-bar {
   display: flex;
+  flex-direction: column;
   align-items: center;
-  justify-content: space-between;
-  gap: 1.5rem;
-  padding: 1.1rem 1.5rem;
+  justify-content: center;
+  gap: 1rem;
+  padding: 1.5rem;
   background: rgba(255,255,255,0.04);
   border: 1px solid rgba(255,255,255,0.08);
   border-radius: 12px;
   margin-bottom: 2.5rem;
+  text-align: center;
 }
 .campus-upload-bar p {
   color: rgba(255,255,255,0.5);
-  font-size: 0.88rem;
+  font-size: 0.95rem;
   margin: 0;
+}
+.campus-upload-bar .btn {
+  font-size: 1rem;
+  padding: 0.75rem 2rem;
 }
 
 /* ── CAMPUS SPOTTING: loading ───────────────────────────── */
@@ -1910,26 +1916,26 @@ dialog.lightbox::backdrop {
 }
 
 /* ── SPOT UPLOAD MODAL ──────────────────────────────────── */
-.spot-modal-overlay {
-  position: fixed;
-  top: 0; left: 0; right: 0; bottom: 0;
-  width: 100vw; height: 100vh;
-  z-index: 8500;
-  background: rgba(0,0,0,0.88);
-  backdrop-filter: blur(10px);
+dialog.spot-modal {
+  border: none;
+  background: transparent;
+  padding: 0;
+  margin: auto;
+  max-width: 100vw;
+  max-height: 100vh;
+  width: 100vw;
+  height: 100dvh;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 1rem;
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.25s ease;
+  overflow: hidden;
 }
-.spot-modal-overlay.open {
-  opacity: 1;
-  pointer-events: all;
+dialog.spot-modal::backdrop {
+  background: rgba(0,0,0,0.88);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
 }
-.spot-modal {
+.spot-modal-inner {
   background: #0d1b2e;
   border: 1px solid rgba(255,255,255,0.1);
   border-radius: 16px;
@@ -1937,10 +1943,7 @@ dialog.lightbox::backdrop {
   width: 100%;
   max-width: 480px;
   position: relative;
-  transform: translateY(24px);
-  transition: transform 0.32s cubic-bezier(0.22,1,0.36,1);
 }
-.spot-modal-overlay.open .spot-modal { transform: translateY(0); }
 
 .spot-modal-close {
   position: absolute;
