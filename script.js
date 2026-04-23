@@ -70,16 +70,6 @@ document.querySelectorAll('.reveal, .reveal-left, .reveal-right, .reveal-scale')
   revealObserver.observe(el);
 });
 
-/* ── HERO PARALLAX ─── */
-const heroPhoto = document.querySelector('.hero-photo');
-if (heroPhoto) {
-  window.addEventListener('scroll', () => {
-    const y = window.scrollY;
-    if (y < window.innerHeight * 1.3) {
-      heroPhoto.style.transform = `scale(1.06) translateY(${y * 0.12}px)`;
-    }
-  }, { passive: true });
-}
 
 /* ── STAT COUNTER ─── */
 function easeOutCubic(t) { return 1 - Math.pow(1 - t, 3); }
@@ -660,7 +650,6 @@ spotUploadBtn.addEventListener('click', async () => {
   if (!selectedSpotFiles.length) return;
   spotUploadBtn.disabled = true;
   const caption = spotCaptionInput.value.trim();
-  const ctx = caption ? `status=pending|caption=${caption}` : 'status=pending';
   const total = selectedSpotFiles.length;
 
   try {
@@ -671,9 +660,13 @@ spotUploadBtn.addEventListener('click', async () => {
       fd.append('file', compressed, 'spot.jpg');
       fd.append('upload_preset', UPLOAD_PRESET);
       fd.append('folder', 'campus-spots');
-      fd.append('context', ctx);
       const res = await fetch(`https://api.cloudinary.com/v1_1/${CLOUD_NAME}/image/upload`, { method: 'POST', body: fd });
       if (!res.ok) throw new Error('Upload failed');
+      const data = await res.json();
+      // Set context (status + caption) via Admin API — upload presets can drop client-side context
+      const params = new URLSearchParams({ id: data.public_id });
+      if (caption) params.set('caption', caption);
+      await fetch(`/api/set-caption?${params}`);
     }
 
     spotStatus.textContent = `${total} photo${total > 1 ? 's' : ''} submitted! They'll appear after review.`;
