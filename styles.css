@@ -57,6 +57,7 @@
 /* ── RESET ──────────────────────────────────────────────── */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 html { scroll-behavior: smooth; font-size: 16px; }
+html.no-scroll { overflow: hidden; }
 body {
   background: var(--bg);
   color: var(--text);
@@ -1384,14 +1385,13 @@ ul { list-style: none; }
 }
 .join-leadership-title {
   font-family: var(--font-display);
-  font-size: 1.2rem;
-  font-weight: 600;
-  color: rgba(255,255,255,0.55);
-  letter-spacing: 0.04em;
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: var(--white);
+  letter-spacing: 0.06em;
   margin-bottom: 1.5rem;
   text-transform: uppercase;
-  font-size: 0.78rem;
-  letter-spacing: 0.16em;
+  text-align: center;
 }
 
 .leader-mini-grid {
@@ -1448,13 +1448,13 @@ ul { list-style: none; }
   gap: 0.2rem;
 }
 .leader-mini-name {
-  font-size: 0.88rem;
+  font-size: 1rem;
   font-weight: 600;
   color: var(--white);
   line-height: 1.2;
 }
 .leader-mini-role {
-  font-size: 0.66rem;
+  font-size: 0.75rem;
   font-weight: 500;
   letter-spacing: 0.07em;
   text-transform: uppercase;

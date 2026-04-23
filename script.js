@@ -113,11 +113,11 @@ function openLightbox(src, alt) {
   lbImg.src = src;
   lbImg.alt = alt || '';
   lb.classList.add('open');
-  document.body.style.overflow = 'hidden';
+  document.documentElement.classList.add('no-scroll');
 }
 function closeLightbox() {
   lb.classList.remove('open');
-  document.body.style.overflow = '';
+  document.documentElement.classList.remove('no-scroll');
   setTimeout(() => { lbImg.src = ''; }, 300);
 }
 lb.querySelector('.lightbox-close').addEventListener('click', closeLightbox);
@@ -581,11 +581,11 @@ let selectedSpotFile = null;
 
 function openSpotModal() {
   spotModalOverlay.classList.add('open');
-  document.body.style.overflow = 'hidden';
+  document.documentElement.classList.add('no-scroll');
 }
 function closeSpotModal() {
   spotModalOverlay.classList.remove('open');
-  document.body.style.overflow = '';
+  document.documentElement.classList.remove('no-scroll');
   resetSpotModal();
 }
 function resetSpotModal() {
