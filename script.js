@@ -395,6 +395,106 @@ document.querySelectorAll('.section-collapse-btn').forEach(btn => {
 const CLOUD_NAME = 'ddud73mxv';
 const UPLOAD_PRESET = 'Campus Spotting';
 
+/* ── DYNAMIC SHOW COVERAGE ─────────────────────────────── */
+const LOGO_URL = 'https://res.cloudinary.com/ddud73mxv/image/upload/q_auto,f_auto,w_1200/ycar/general/Logo';
+
+function buildShowBlock(event) {
+  const galleryId = `gallery-${event.folder}`;
+  const mini = event.photos.slice(0, 4);
+  const full = event.photos.slice(4);
+
+  const miniHtml = mini.map(url =>
+    `<img src="${url}" alt="${event.name}" loading="lazy" />`
+  ).join('');
+
+  const fullHtml = full.map(url =>
+    `<img data-src="${url}" alt="${event.name}" />`
+  ).join('');
+
+  const expandBtn = full.length ? `
+    <button class="show-expand-btn" data-target="${galleryId}" data-count="${full.length}">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/>
+        <rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/>
+      </svg>
+      <span class="show-expand-text">See All ${event.photos.length} Photos</span>
+      <svg class="expand-chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+        <polyline points="6 9 12 15 18 9"/>
+      </svg>
+    </button>` : '';
+
+  const fullGallery = full.length ? `
+    <div class="show-full-gallery" id="${galleryId}">
+      <div class="show-full-grid">${fullHtml}</div>
+    </div>` : '';
+
+  const block = document.createElement('div');
+  block.className = 'show-block reveal';
+  block.innerHTML = `
+    <div class="show-header-row">
+      <div class="show-logo-wrap"><img src="${LOGO_URL}" alt="YCAR" /></div>
+      <div class="show-header-info">
+        <h3 class="show-name">${event.name}</h3>
+        <div class="show-meta-row">
+          <span class="show-photo-count">${event.photos.length} photos</span>
+        </div>
+      </div>
+    </div>
+    <div class="show-mini-strip">${miniHtml}</div>
+    ${fullGallery}
+    ${expandBtn}
+  `;
+
+  block.querySelectorAll('.show-mini-strip img').forEach(attachLightbox);
+
+  const btn = block.querySelector('.show-expand-btn');
+  if (btn) {
+    btn.addEventListener('click', () => {
+      const gallery = document.getElementById(btn.dataset.target);
+      const isOpen = gallery.classList.contains('open');
+      gallery.classList.toggle('open');
+      btn.classList.toggle('expanded');
+      if (!isOpen) {
+        gallery.querySelectorAll('img[data-src]').forEach(img => {
+          img.src = img.dataset.src;
+          img.removeAttribute('data-src');
+          attachLightbox(img);
+        });
+      }
+      const textEl = btn.querySelector('.show-expand-text');
+      const total = parseInt(btn.dataset.count, 10) + 4;
+      textEl.textContent = isOpen ? `See All ${total} Photos` : 'Collapse Gallery';
+      if (!isOpen) gallery.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    });
+  }
+
+  return block;
+}
+
+async function loadEvents() {
+  const container = document.getElementById('shows-dynamic');
+  if (!container) return;
+  try {
+    const res = await fetch('/api/events');
+    const { events } = await res.json();
+    container.innerHTML = '';
+    if (!events || events.length === 0) {
+      container.innerHTML = '<p style="color:var(--text-muted);text-align:center;padding:2rem 0">No events yet.</p>';
+      return;
+    }
+    events.forEach(ev => {
+      const block = buildShowBlock(ev);
+      container.appendChild(block);
+      revealObserver.observe(block);
+      const strip = block.querySelector('.show-mini-strip');
+      if (strip) parallaxMap.set(strip, false);
+    });
+  } catch {
+    container.innerHTML = '<p style="color:var(--text-muted);text-align:center;padding:2rem 0">Could not load events.</p>';
+  }
+}
+loadEvents();
+
 const campusPhotoGrid  = document.getElementById('campus-photo-grid');
 const campusLoading    = document.getElementById('campus-loading');
 const campusEmptyState = document.getElementById('campus-empty-state');
