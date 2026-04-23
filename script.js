@@ -2,14 +2,8 @@
    Yale Car Club — script.js
 ───────────────────────────────────────────────────────── */
 
-/* ── NAV: scrolled state ─── */
+/* ── NAV ─── */
 const nav = document.getElementById('nav');
-const heroEl = document.querySelector('.hero');
-
-window.addEventListener('scroll', () => {
-  const y = window.scrollY;
-  nav.classList.toggle('scrolled', y > 40);
-}, { passive: true });
 
 /* ── NAV: dropdown click toggle ─── */
 document.querySelectorAll('.nav-dropdown-trigger').forEach(btn => {
