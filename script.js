@@ -2,42 +2,14 @@
    Yale Car Club — script.js
 ───────────────────────────────────────────────────────── */
 
-/* ── NAV: hide past hero; floating hamburger appears ─── */
+/* ── NAV: scrolled state ─── */
 const nav = document.getElementById('nav');
 const heroEl = document.querySelector('.hero');
-const floatingHamburger = document.getElementById('floating-hamburger');
-const floatingMenu = document.getElementById('floating-menu');
 
 window.addEventListener('scroll', () => {
   const y = window.scrollY;
   nav.classList.toggle('scrolled', y > 40);
-  const heroH = heroEl ? heroEl.offsetHeight * 0.85 : window.innerHeight * 0.85;
-  const pastHero = y > heroH;
-  nav.classList.toggle('hidden-nav', pastHero);
-  floatingHamburger.classList.toggle('visible', pastHero);
-  if (!pastHero) {
-    floatingHamburger.classList.remove('open');
-    floatingMenu.classList.remove('open');
-  }
 }, { passive: true });
-
-floatingHamburger.addEventListener('click', e => {
-  e.stopPropagation();
-  floatingHamburger.classList.toggle('open');
-  floatingMenu.classList.toggle('open');
-});
-
-document.addEventListener('click', () => {
-  floatingHamburger.classList.remove('open');
-  floatingMenu.classList.remove('open');
-});
-
-floatingMenu.querySelectorAll('a').forEach(a => {
-  a.addEventListener('click', () => {
-    floatingHamburger.classList.remove('open');
-    floatingMenu.classList.remove('open');
-  });
-});
 
 /* ── NAV: dropdown click toggle ─── */
 document.querySelectorAll('.nav-dropdown-trigger').forEach(btn => {
