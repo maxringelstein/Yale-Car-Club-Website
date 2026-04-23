@@ -476,7 +476,7 @@ ul { list-style: none; }
 .hero-photo {
   position: absolute;
   inset: -5%;
-  background: url('https://res.cloudinary.com/ddud73mxv/image/upload/q_auto,f_auto,w_1600/ycar/general/main_porsche') center/cover no-repeat;
+  background: url('https://res.cloudinary.com/ddud73mxv/image/upload/q_auto,f_auto,w_1600/main_porsche_xy3zkk') center/cover no-repeat;
   opacity: 1;
   animation: heroPan 28s ease-in-out infinite alternate;
   will-change: transform;

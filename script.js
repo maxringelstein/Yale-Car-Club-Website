@@ -396,7 +396,7 @@ const CLOUD_NAME = 'ddud73mxv';
 const UPLOAD_PRESET = 'Campus Spotting';
 
 /* ── DYNAMIC SHOW COVERAGE ─────────────────────────────── */
-const LOGO_URL = 'https://res.cloudinary.com/ddud73mxv/image/upload/q_auto,f_auto,w_1200/ycar/general/Logo';
+const LOGO_URL = 'https://res.cloudinary.com/ddud73mxv/image/upload/q_auto,f_auto,w_1200/Logo_ytrxrk';
 
 function buildShowBlock(event) {
   const galleryId = `gallery-${event.folder}`;
