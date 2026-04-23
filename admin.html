@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>YCAR Admin — Pending Spots</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { background: #060f1c; color: #e8eaf0; font-family: system-ui, sans-serif; min-height: 100vh; padding: 2rem; }
+    h1 { font-size: 1.5rem; margin-bottom: 0.4rem; }
+    p.sub { color: rgba(255,255,255,0.4); font-size: 0.85rem; margin-bottom: 2rem; }
+    #login { max-width: 360px; margin: 4rem auto; }
+    #login input { width: 100%; padding: 0.75rem 1rem; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.12); border-radius: 8px; color: #fff; font-size: 1rem; margin-bottom: 0.75rem; }
+    button { cursor: pointer; border: none; border-radius: 8px; font-size: 0.9rem; font-weight: 600; padding: 0.65rem 1.4rem; transition: opacity 0.2s; }
+    button:hover { opacity: 0.85; }
+    .btn-primary { background: #00356b; color: #fff; }
+    .btn-approve { background: #1a7a3f; color: #fff; }
+    .btn-reject  { background: #7a1a1a; color: #fff; }
+    #grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 1.25rem; }
+    .card { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.09); border-radius: 12px; overflow: hidden; }
+    .card img { width: 100%; aspect-ratio: 4/3; object-fit: cover; display: block; }
+    .card-body { padding: 0.9rem; }
+    .caption { font-size: 0.82rem; color: rgba(255,255,255,0.5); margin-bottom: 0.75rem; min-height: 1.2em; }
+    .card-actions { display: flex; gap: 0.5rem; }
+    .card-actions button { flex: 1; }
+    .done { opacity: 0.35; pointer-events: none; }
+    #status { margin-bottom: 1.5rem; color: rgba(255,255,255,0.5); font-size: 0.88rem; }
+  </style>
+</head>
+<body>
+
+<div id="login">
+  <h1>YCAR Admin</h1>
+  <p class="sub">Enter your admin token to review pending campus spots.</p>
+  <input type="password" id="token-input" placeholder="Admin token" />
+  <button class="btn-primary" onclick="load()">Sign In</button>
+</div>
+
+<div id="app" style="display:none">
+  <h1>Pending Campus Spots</h1>
+  <p class="sub">Approve photos to make them visible on the site. Reject to discard.</p>
+  <p id="status"></p>
+  <div id="grid"></div>
+</div>
+
+<script>
+  let TOKEN = '';
+
+  async function load() {
+    TOKEN = document.getElementById('token-input').value.trim();
+    const res = await fetch(`/api/pending?token=${encodeURIComponent(TOKEN)}`);
+    if (res.status === 401) { alert('Wrong token.'); return; }
+    const { photos } = await res.json();
+    document.getElementById('login').style.display = 'none';
+    document.getElementById('app').style.display = 'block';
+    const grid = document.getElementById('grid');
+    const status = document.getElementById('status');
+    if (!photos.length) { status.textContent = 'No pending photos.'; return; }
+    status.textContent = `${photos.length} photo${photos.length !== 1 ? 's' : ''} awaiting review.`;
+    grid.innerHTML = photos.map(p => `
+      <div class="card" id="card-${CSS.escape(p.public_id)}">
+        <img src="${p.url}" loading="lazy" />
+        <div class="card-body">
+          <div class="caption">${p.caption || '<em>No caption</em>'}</div>
+          <div class="card-actions">
+            <button class="btn-approve" onclick="act('${p.public_id}','approve')">Approve</button>
+            <button class="btn-reject"  onclick="act('${p.public_id}','reject')">Reject</button>
+          </div>
+        </div>
+      </div>`).join('');
+  }
+
+  async function act(id, action) {
+    const res = await fetch(`/api/approve?token=${encodeURIComponent(TOKEN)}&id=${encodeURIComponent(id)}&action=${action}`);
+    if (res.ok) {
+      const card = document.getElementById('card-' + CSS.escape(id));
+      if (card) card.classList.add('done');
+    } else {
+      alert('Action failed. Check console.');
+    }
+  }
+
+  document.getElementById('token-input').addEventListener('keydown', e => {
+    if (e.key === 'Enter') load();
+  });
+</script>
+</body>
+</html>

@@ -208,13 +208,15 @@ ul { list-style: none; }
   right: 0;
   z-index: 1000;
   isolation: isolate;
-  transition: background var(--transition), backdrop-filter var(--transition);
+  background: rgba(2, 10, 22, 0.85);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+  transition: background var(--transition), border-color var(--transition);
 }
 .nav.scrolled {
-  background: rgba(2, 10, 22, 0.96);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border-bottom: 1px solid var(--border);
+  background: rgba(2, 10, 22, 0.97);
+  border-bottom-color: var(--border);
 }
 
 .nav-inner {

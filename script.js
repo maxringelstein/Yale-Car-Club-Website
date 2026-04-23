@@ -675,7 +675,8 @@ spotUploadBtn.addEventListener('click', async () => {
     fd.append('upload_preset', UPLOAD_PRESET);
     fd.append('folder', 'campus-spots');
     const caption = spotCaptionInput.value.trim();
-    if (caption) fd.append('context', `caption=${caption}`);
+    const ctx = caption ? `status=pending|caption=${caption}` : 'status=pending';
+    fd.append('context', ctx);
 
     const res = await fetch(`https://api.cloudinary.com/v1_1/${CLOUD_NAME}/image/upload`, {
       method: 'POST',
@@ -683,7 +684,7 @@ spotUploadBtn.addEventListener('click', async () => {
     });
     if (!res.ok) throw new Error('Upload failed');
 
-    spotStatus.textContent = "Photo submitted — it's live on the site!";
+    spotStatus.textContent = 'Photo submitted! It will appear after review.';
     spotStatus.className = 'spot-status success';
 
     setTimeout(() => {
