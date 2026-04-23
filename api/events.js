@@ -43,7 +43,7 @@ export default async function handler(req, res) {
         method: 'POST',
         headers: jsonHdr,
         body: JSON.stringify({
-          expression: `folder="${folder}"`,
+          expression: `asset_folder="${folder}"`,
           sort_by: [{ public_id: 'asc' }],
           max_results: 50,
         }),

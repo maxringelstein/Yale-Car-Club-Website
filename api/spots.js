@@ -18,7 +18,7 @@ export default async function handler(req, res) {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        expression: 'folder:campus-spots',
+        expression: 'asset_folder="campus-spots"',
         sort_by: [{ created_at: 'desc' }],
         max_results: 100,
         with_field: ['context'],

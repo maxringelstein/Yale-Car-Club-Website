@@ -471,12 +471,25 @@ function buildShowBlock(event) {
   return block;
 }
 
+function populateStrip(events) {
+  const track = document.getElementById('strip-track');
+  if (!track) return;
+  const all = events.flatMap(e => e.photos.slice(0, 8).map(url => ({ url, name: e.name })));
+  if (!all.length) return;
+  const doubled = [...all, ...all];
+  track.innerHTML = doubled.map(p =>
+    `<img src="${p.url}" alt="${p.name}" loading="lazy" />`
+  ).join('');
+  track.querySelectorAll('img').forEach(attachLightbox);
+}
+
 async function loadEvents() {
   const container = document.getElementById('shows-dynamic');
   if (!container) return;
   try {
     const res = await fetch('/api/events');
     const { events } = await res.json();
+    populateStrip(events || []);
     container.innerHTML = '';
     if (!events || events.length === 0) {
       container.innerHTML = '<p style="color:var(--text-muted);text-align:center;padding:2rem 0">No events yet.</p>';
