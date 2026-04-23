@@ -2,10 +2,14 @@
    Yale Car Club — script.js
 ───────────────────────────────────────────────────────── */
 
-/* ── NAV: scrolled state ─── */
+/* ── NAV: scrolled state + brand name reveal ─── */
 const nav = document.getElementById('nav');
+const heroEl = document.querySelector('.hero');
 window.addEventListener('scroll', () => {
-  nav.classList.toggle('scrolled', window.scrollY > 40);
+  const y = window.scrollY;
+  nav.classList.toggle('scrolled', y > 40);
+  const heroH = heroEl ? heroEl.offsetHeight * 0.7 : window.innerHeight * 0.7;
+  nav.classList.toggle('scrolled-past-hero', y > heroH);
 }, { passive: true });
 
 /* ── NAV: dropdown click toggle ─── */
