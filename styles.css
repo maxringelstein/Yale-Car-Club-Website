@@ -202,19 +202,17 @@ ul { list-style: none; }
 
 /* ── NAV ────────────────────────────────────────────────── */
 .nav {
-  position: fixed !important;
+  position: fixed;
   top: 0;
   left: 0;
   right: 0;
   z-index: 9999;
-  background: rgba(2, 10, 22, 0.92);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border-bottom: 1px solid rgba(255,255,255,0.08);
+  background: rgba(4, 12, 26, 0.97);
+  border-bottom: 1px solid rgba(255,255,255,0.07);
   transition: background 0.3s ease, border-color 0.3s ease;
 }
 .nav.scrolled {
-  background: rgba(2, 10, 22, 0.98);
+  background: rgb(4, 12, 26);
   border-bottom-color: rgba(255,255,255,0.12);
 }
 
@@ -483,7 +481,6 @@ ul { list-style: none; }
   align-items: center;
   justify-content: center;
   overflow: hidden;
-  z-index: 2;
 }
 
 .hero-bg {
