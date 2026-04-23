@@ -1,6 +1,4 @@
-.DS_Store
-**/.DS_Store
-Thumbs.db
-*.log
+.Rhistory
+.claude/
 node_modules/
-brand_assets/events/
+.DS_Store

@@ -132,7 +132,7 @@ function attachLightbox(img) {
   });
 }
 document.querySelectorAll(
-  '.show-preview-grid img, .show-thumbs img, .about-img, .strip-track img'
+  '.show-mini-strip img, .about-img, .strip-track img'
 ).forEach(attachLightbox);
 
 /* ── SHOW COVERAGE: expand + deferred img load ─── */
@@ -165,9 +165,20 @@ if (stripTrack) {
   stripTrack.addEventListener('mouseleave', () => stripTrack.style.animationPlayState = 'running');
 }
 
+/* ── LEADER MINI CARD BIO EXPAND ─── */
+document.querySelectorAll('.leader-mini-toggle').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const card = btn.closest('.leader-mini-card');
+    const bio = card.querySelector('.leader-mini-bio');
+    const isOpen = bio.classList.contains('open');
+    bio.classList.toggle('open', !isOpen);
+    btn.setAttribute('aria-expanded', !isOpen);
+  });
+});
+
 /* ── SECTION PARALLAX ─── */
 const parallaxMap = new Map();
-document.querySelectorAll('.show-preview-grid').forEach(el => parallaxMap.set(el, false));
+document.querySelectorAll('.show-mini-strip').forEach(el => parallaxMap.set(el, false));
 
 new IntersectionObserver(entries => {
   entries.forEach(e => parallaxMap.set(e.target, e.isIntersecting));
@@ -191,6 +202,194 @@ window.addEventListener('scroll', () => {
     a.classList.toggle('active', a.getAttribute('href') === `#${current}`);
   });
 }, { passive: true });
+
+/* ── SECTION COLLAPSE TOGGLE ─── */
+document.querySelectorAll('.section-collapse-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const body = document.getElementById(btn.dataset.target);
+    const expanded = btn.getAttribute('aria-expanded') === 'true';
+    btn.setAttribute('aria-expanded', !expanded);
+    body.classList.toggle('collapsed', expanded);
+    btn.querySelector('.collapse-label').textContent = expanded ? 'Expand' : 'Collapse';
+  });
+});
+
+/* ── SHOOTING STAR / ZAP / BURST BACKGROUND ─── */
+(function () {
+  const canvas = document.createElement('canvas');
+  canvas.id = 'zap-canvas';
+  document.body.prepend(canvas);
+  const ctx = canvas.getContext('2d');
+
+  function resize() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
+  resize();
+  window.addEventListener('resize', resize, { passive: true });
+
+  /* ── Shooting Star ── */
+  class ShootingStar {
+    reset() {
+      const fromLeft = Math.random() < 0.6;
+      this.x = fromLeft ? -40 : Math.random() * canvas.width;
+      this.y = fromLeft ? Math.random() * canvas.height * 0.7 : -40;
+      this.angle = 0.35 + Math.random() * 0.5;
+      this.speed = 5 + Math.random() * 8;
+      this.len = 100 + Math.random() * 180;
+      this.maxOpa = 0.18 + Math.random() * 0.22;
+      this.opacity = 0; this.phase = 'in'; this.alive = true;
+    }
+    update() {
+      this.x += Math.cos(this.angle) * this.speed;
+      this.y += Math.sin(this.angle) * this.speed;
+      if (this.phase === 'in') {
+        this.opacity = Math.min(this.maxOpa, this.opacity + 0.025);
+        if (this.opacity >= this.maxOpa) this.phase = 'out';
+      } else {
+        this.opacity -= 0.006;
+        if (this.opacity <= 0) this.alive = false;
+      }
+    }
+    draw() {
+      const tx = this.x - Math.cos(this.angle) * this.len;
+      const ty = this.y - Math.sin(this.angle) * this.len;
+      const g = ctx.createLinearGradient(tx, ty, this.x, this.y);
+      g.addColorStop(0, `rgba(180,210,255,0)`);
+      g.addColorStop(0.6, `rgba(200,225,255,${this.opacity * 0.5})`);
+      g.addColorStop(1, `rgba(230,242,255,${this.opacity})`);
+      ctx.save();
+      ctx.shadowColor = `rgba(100,160,255,${this.opacity * 0.8})`;
+      ctx.shadowBlur = 8;
+      ctx.beginPath(); ctx.moveTo(tx, ty); ctx.lineTo(this.x, this.y);
+      ctx.strokeStyle = g; ctx.lineWidth = 1.2; ctx.stroke();
+      /* bright head */
+      ctx.beginPath(); ctx.arc(this.x, this.y, 1.8, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(240,248,255,${this.opacity})`;
+      ctx.shadowBlur = 14; ctx.fill();
+      ctx.restore();
+    }
+  }
+
+  /* ── Electric Zap ── */
+  class Zap {
+    reset() {
+      this.x = 80 + Math.random() * (canvas.width - 160);
+      this.y = 80 + Math.random() * (canvas.height - 160);
+      let x = this.x, y = this.y, a = Math.random() * Math.PI * 2;
+      this.segs = [];
+      const n = 5 + Math.floor(Math.random() * 8);
+      for (let i = 0; i < n; i++) {
+        a += (Math.random() - 0.5) * 1.4;
+        const l = 14 + Math.random() * 40;
+        const nx = x + Math.cos(a) * l, ny = y + Math.sin(a) * l;
+        this.segs.push({ x1: x, y1: y, x2: nx, y2: ny, branch: false });
+        if (Math.random() < 0.4) {
+          const ba = a + (Math.random() - 0.5) * 2.2;
+          const bl = l * 0.6;
+          this.segs.push({ x1: nx, y1: ny, x2: nx + Math.cos(ba) * bl, y2: ny + Math.sin(ba) * bl, branch: true });
+        }
+        x = nx; y = ny;
+      }
+      this.maxOpa = 0.15 + Math.random() * 0.20;
+      this.opacity = 0; this.phase = 'in';
+      this.hold = 0; this.holdMax = 4 + Math.floor(Math.random() * 10);
+      this.alive = true;
+    }
+    update() {
+      if (this.phase === 'in') {
+        this.opacity = Math.min(this.maxOpa, this.opacity + this.maxOpa / 2);
+        if (this.opacity >= this.maxOpa) this.phase = 'hold';
+      } else if (this.phase === 'hold') {
+        if (++this.hold >= this.holdMax) this.phase = 'out';
+      } else {
+        this.opacity -= this.maxOpa / 14;
+        if (this.opacity <= 0) this.alive = false;
+      }
+    }
+    draw() {
+      ctx.save(); ctx.lineCap = 'round';
+      ctx.shadowColor = `rgba(80,140,255,0.6)`; ctx.shadowBlur = 10;
+      this.segs.forEach(s => {
+        const o = this.opacity * (s.branch ? 0.5 : 1);
+        ctx.beginPath(); ctx.moveTo(s.x1, s.y1); ctx.lineTo(s.x2, s.y2);
+        ctx.strokeStyle = `rgba(210,230,255,${o})`;
+        ctx.lineWidth = s.branch ? 0.6 : 1.1;
+        ctx.stroke();
+      });
+      /* origin dot */
+      ctx.beginPath(); ctx.arc(this.x, this.y, 1.5, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(220,240,255,${this.opacity})`; ctx.fill();
+      ctx.restore();
+    }
+  }
+
+  /* ── Spark Burst ── */
+  class Burst {
+    reset() {
+      this.x = 60 + Math.random() * (canvas.width - 120);
+      this.y = 60 + Math.random() * (canvas.height - 120);
+      const count = 8 + Math.floor(Math.random() * 8);
+      this.rays = Array.from({ length: count }, (_, i) => {
+        const base = (i / count) * Math.PI * 2 + Math.random() * 0.4;
+        const len = 18 + Math.random() * 45;
+        return { a: base, len, offLen: Math.random() * 0.4 };
+      });
+      this.maxOpa = 0.18 + Math.random() * 0.22;
+      this.opacity = 0; this.phase = 'in';
+      this.hold = 0; this.holdMax = 3 + Math.floor(Math.random() * 6);
+      this.alive = true;
+    }
+    update() {
+      if (this.phase === 'in') {
+        this.opacity = Math.min(this.maxOpa, this.opacity + this.maxOpa / 2);
+        if (this.opacity >= this.maxOpa) this.phase = 'hold';
+      } else if (this.phase === 'hold') {
+        if (++this.hold >= this.holdMax) this.phase = 'out';
+      } else {
+        this.opacity -= this.maxOpa / 10;
+        if (this.opacity <= 0) this.alive = false;
+      }
+    }
+    draw() {
+      ctx.save(); ctx.lineCap = 'round';
+      ctx.shadowColor = `rgba(80,160,255,0.7)`; ctx.shadowBlur = 12;
+      this.rays.forEach(r => {
+        const startX = this.x + Math.cos(r.a) * r.len * r.offLen;
+        const startY = this.y + Math.sin(r.a) * r.len * r.offLen;
+        const endX = this.x + Math.cos(r.a) * r.len;
+        const endY = this.y + Math.sin(r.a) * r.len;
+        const g = ctx.createLinearGradient(startX, startY, endX, endY);
+        g.addColorStop(0, `rgba(220,240,255,${this.opacity})`);
+        g.addColorStop(1, `rgba(180,210,255,0)`);
+        ctx.beginPath(); ctx.moveTo(startX, startY); ctx.lineTo(endX, endY);
+        ctx.strokeStyle = g; ctx.lineWidth = 0.9; ctx.stroke();
+      });
+      /* center flash */
+      ctx.beginPath(); ctx.arc(this.x, this.y, 2.5, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(240,248,255,${this.opacity})`; ctx.fill();
+      ctx.restore();
+    }
+  }
+
+  const pool = [];
+  const TYPES = [ShootingStar, ShootingStar, Zap, Zap, Burst];
+
+  function spawnIfNeeded() {
+    if (pool.length < 18 && Math.random() < 0.07) {
+      const T = TYPES[Math.floor(Math.random() * TYPES.length)];
+      const e = new T(); e.reset(); pool.push(e);
+    }
+  }
+
+  function tick() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    spawnIfNeeded();
+    for (let i = pool.length - 1; i >= 0; i--) {
+      pool[i].update(); pool[i].draw();
+      if (!pool[i].alive) pool.splice(i, 1);
+    }
+    requestAnimationFrame(tick);
+  }
+  tick();
+})();
 
 /* ── CAMPUS CAR SPOTTING ─── */
 const CLOUD_NAME = 'ddud73mxv';
