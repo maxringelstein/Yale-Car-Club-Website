@@ -102,32 +102,25 @@ const statObserver = new IntersectionObserver(entries => {
 document.querySelectorAll('.stat-number[data-count]').forEach(el => statObserver.observe(el));
 
 /* ── LIGHTBOX ─── */
-const lb = document.createElement('div');
+const lb = document.createElement('dialog');
 lb.className = 'lightbox';
 lb.innerHTML = `<button class="lightbox-close" aria-label="Close">&times;</button>
                 <img class="lightbox-img" src="" alt="" />`;
 document.body.appendChild(lb);
 const lbImg = lb.querySelector('.lightbox-img');
 
-let _lbScrollY = 0;
 function openLightbox(src, alt) {
   lbImg.src = src;
   lbImg.alt = alt || '';
-  _lbScrollY = window.scrollY;
-  document.body.style.top = `-${_lbScrollY}px`;
-  document.body.classList.add('lb-open');
-  lb.classList.add('open');
+  lb.showModal();
 }
 function closeLightbox() {
-  lb.classList.remove('open');
-  document.body.classList.remove('lb-open');
-  document.body.style.top = '';
-  window.scrollTo(0, _lbScrollY);
+  lb.close();
   setTimeout(() => { lbImg.src = ''; }, 300);
 }
 lb.querySelector('.lightbox-close').addEventListener('click', closeLightbox);
 lb.addEventListener('click', e => { if (e.target === lb) closeLightbox(); });
-document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox(); });
+document.addEventListener('keydown', e => { if (e.key === 'Escape' && lb.open) { e.preventDefault(); closeLightbox(); } });
 
 function attachLightbox(img) {
   img.style.cursor = 'zoom-in';
