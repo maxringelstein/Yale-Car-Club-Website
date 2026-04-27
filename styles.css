@@ -1653,7 +1653,22 @@ ul { list-style: none; }
   .leader-mini-grid { grid-template-columns: repeat(2, 1fr); }
   .leader-mini-photo { width: 84px; height: 84px; }
   .leader-mini-toggle { padding: 1.2rem 0.75rem 0.9rem; }
-  .show-mini-strip img { height: 120px; }
+  .show-mini-strip {
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    gap: 8px;
+  }
+  .show-mini-strip::-webkit-scrollbar { display: none; }
+  .show-mini-strip img {
+    flex-shrink: 0;
+    width: 78vw;
+    height: 200px;
+    scroll-snap-align: start;
+    border-radius: 8px;
+  }
   .hero-stats {
     gap: 1.25rem;
     padding: 1.25rem 1.75rem;
@@ -1690,12 +1705,13 @@ ul { list-style: none; }
   .show-thumbs { grid-template-rows: none; grid-template-columns: repeat(3, 1fr); height: 110px; }
   .show-full-grid { grid-template-columns: repeat(2, 1fr); }
   .campus-placeholder { grid-template-columns: 1fr; }
+  .show-mini-strip img:hover { transform: none; }
 }
 
 @media (max-width: 480px) {
   .leader-card { flex: 0 0 100%; }
   .container { padding: 0 1.25rem; }
-  .hero-title { font-size: clamp(3rem, 12vw, 5rem); }
+  .hero-title { font-size: clamp(1.9rem, 9vw, 3rem); }
   .about, .events, .leadership, .join, .gallery { padding: 5rem 0; }
   .travel-grid { grid-template-columns: 1fr; }
   .gallery-grid { grid-template-columns: 1fr 1fr; grid-auto-rows: 150px; }
