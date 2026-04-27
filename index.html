@@ -3,94 +3,93 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Yale Car Club — YCAR</title>
+  <title>Yale Car Club</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="styles.css" />
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="https://res.cloudinary.com/ddud73mxv/image/upload/q_auto,f_auto,w_64/Logo_ytrxrk" />
+  <link rel="apple-touch-icon" href="https://res.cloudinary.com/ddud73mxv/image/upload/q_auto,f_auto,w_180/Logo_ytrxrk" />
+  <meta name="theme-color" content="#00356B" />
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Yale Car Club" />
+  <meta property="og:description" content="Yale's premier student-run automotive community." />
+  <meta property="og:image" content="https://res.cloudinary.com/ddud73mxv/image/upload/q_auto,f_auto,w_1200/ycar/general/main_porsche" />
+  <meta property="og:url" content="https://yalecarclub.com" />
+  <meta property="og:type" content="website" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:image" content="https://res.cloudinary.com/ddud73mxv/image/upload/q_auto,f_auto,w_1200/ycar/general/main_porsche" />
 </head>
 <body>
 
-  <!-- ── NAV ─────────────────────────────────────────────── -->
+  <!-- ── NAV ──────────────────────────────────────────────── -->
   <nav class="nav" id="nav">
     <div class="nav-inner">
-      <a href="#" class="nav-logo">
-        <div class="nav-logo-disc">
-          <img src="https://res.cloudinary.com/ddud73mxv/image/upload/q_auto,f_auto,w_1200/Logo_ytrxrk" alt="Yale Car Club" />
-        </div>
-        <span class="nav-brand-name">Yale Car Club</span>
+      <a href="#hero" class="nav-logo">
+        <img src="https://res.cloudinary.com/ddud73mxv/image/upload/q_auto,f_auto,w_120/Logo_ytrxrk" alt="YCAR" />
+        <span>Yale Car Club</span>
       </a>
-      <ul class="nav-links">
-        <li><a href="#about">About</a></li>
+      <div class="nav-links">
 
-        <li class="nav-dropdown">
-          <button class="nav-dropdown-trigger" aria-expanded="false">
+        <div class="nav-dropdown">
+          <button class="nav-dropdown-btn" aria-expanded="false">
+            About
+            <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <div class="nav-dropdown-menu">
+            <a href="#about">Our Mission</a>
+            <a href="#leadership">Leadership</a>
+          </div>
+        </div>
+
+        <div class="nav-dropdown">
+          <button class="nav-dropdown-btn" aria-expanded="false">
             Events
             <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
           </button>
-          <div class="dropdown-menu dropdown-wide">
-            <div class="dropdown-col">
-              <span class="dropdown-heading">Upcoming</span>
-              <a href="#events">Cars &amp; Coffee at Yale <span class="dropdown-date">Sep 6, 2026</span></a>
-              <a href="#events">Yale Car Show <span class="dropdown-date">April 2027</span></a>
-            </div>
-            <div class="dropdown-divider-v"></div>
-            <div class="dropdown-col">
-              <span class="dropdown-heading">Past Events</span>
-              <a href="#shows">Moda Miami <span class="dropdown-date">Feb 26–29, 2026</span></a>
-              <a href="#shows">NYC Cars &amp; Coffee <span class="dropdown-date">Feb 8, 2026</span></a>
-            </div>
+          <div class="nav-dropdown-menu">
+            <a href="#events">Upcoming Events</a>
+            <a href="#shows">Past Events</a>
           </div>
-        </li>
+        </div>
 
-        <li class="nav-dropdown">
-          <button class="nav-dropdown-trigger" aria-expanded="false">
+        <div class="nav-dropdown">
+          <button class="nav-dropdown-btn" aria-expanded="false">
             Media
             <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
           </button>
-          <div class="dropdown-menu">
-            <a href="#shows">Show Coverage</a>
-            <a href="#">Magazines &amp; Merch <span class="dropdown-soon">Coming Soon</span></a>
+          <div class="nav-dropdown-menu">
+            <a href="#campus-spots">Campus Spots</a>
+            <a href="#">Merch <span class="nav-soon">Soon</span></a>
+            <a href="#">Magazines <span class="nav-soon">Soon</span></a>
           </div>
-        </li>
+        </div>
 
-        <li><a href="#campus-spots">Campus</a></li>
-
-        <li><a href="#join" class="nav-cta">Join Us</a></li>
-      </ul>
-      <button class="nav-hamburger" id="hamburger" aria-label="Menu">
+        <a href="#join" class="nav-cta">Join Us</a>
+      </div>
+      <button class="nav-hamburger" id="nav-hamburger" aria-label="Menu">
         <span></span><span></span><span></span>
       </button>
     </div>
-
-    <div class="nav-mobile" id="nav-mobile">
-      <a href="#about">About</a>
-      <div class="mobile-group">
-        <button class="mobile-group-trigger">
-          Events
-          <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
-        </button>
-        <div class="mobile-group-items">
-          <a href="#events" class="mobile-sub">Cars &amp; Coffee — Sep 6, 2026</a>
-          <a href="#events" class="mobile-sub">Yale Car Show — April 2027</a>
-          <a href="#shows" class="mobile-sub">Moda Miami — Feb 26–29, 2026</a>
-          <a href="#shows" class="mobile-sub">NYC Cars &amp; Coffee — Feb 8, 2026</a>
-        </div>
-      </div>
-      <div class="mobile-group">
-        <button class="mobile-group-trigger">
-          Media
-          <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
-        </button>
-        <div class="mobile-group-items">
-          <a href="#shows" class="mobile-sub">Show Coverage</a>
-          <a href="#">Magazines &amp; Merch <span class="dropdown-soon">Coming Soon</span></a>
-        </div>
-      </div>
-      <a href="#campus-spots">Campus</a>
-      <a href="#join">Join Us</a>
-    </div>
   </nav>
+
+  <!-- ── MOBILE MENU ───────────────────────────────────────── -->
+  <div class="nav-mobile" id="nav-mobile">
+    <span class="nav-mobile-label">About</span>
+    <a href="#about">Our Mission</a>
+    <a href="#join">Leadership</a>
+    <span class="nav-mobile-label">Events</span>
+    <a href="#events">Upcoming Events</a>
+    <a href="#shows">Past Events</a>
+    <span class="nav-mobile-label">Media</span>
+    <a href="#campus-spots">Campus Spots</a>
+    <a href="#">Merch <span class="nav-soon">Soon</span></a>
+    <a href="#">Magazines <span class="nav-soon">Soon</span></a>
+    <a href="#join" class="nav-mobile-cta">Join Us</a>
+  </div>
 
   <!-- ── HERO ────────────────────────────────────────────── -->
   <section class="hero" id="hero">
@@ -138,181 +137,10 @@
     <div class="strip-track" id="strip-track"></div>
   </div>
 
-  <!-- ── ABOUT ───────────────────────────────────────────── -->
-  <section class="about" id="about">
-    <div class="container">
-      <div class="about-inner">
-        <div class="about-text reveal-left">
-          <div class="section-label reveal">About Yale Car Club — A Student-Run Organization</div>
-          <h2 class="section-title reveal">About <em>YCAR</em></h2>
-          <p class="about-body reveal">
-            Yale Car Club was founded in 2026 to bring together students, alumni, and industry professionals around a shared interest in cars. We organize events throughout the year — from casual meetups to curated car shows — and serve as a hub for automotive culture on campus.
-          </p>
-          <p class="about-body reveal">
-            Open to everyone at Yale, regardless of what you drive or how much you know. The only requirement is an interest in cars.
-          </p>
-          <div class="about-pillars reveal">
-            <div class="pillar">
-              <div class="pillar-icon">⚙</div>
-              <div>
-                <strong>Students &amp; Alumni</strong>
-                <p>A network connecting current students with Yale graduates across the industry.</p>
-              </div>
-            </div>
-            <div class="pillar">
-              <div class="pillar-icon">◈</div>
-              <div>
-                <strong>Industry Access</strong>
-                <p>Speaker events, factory visits, and connections to professionals in automotive and motorsport.</p>
-              </div>
-            </div>
-            <div class="pillar">
-              <div class="pillar-icon">◉</div>
-              <div>
-                <strong>All Are Welcome</strong>
-                <p>Daily drivers, classics, exotics — every car and every background belongs here.</p>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="about-visual reveal-right">
-          <div class="about-image-stack">
-            <img src="" alt="YCAR Members" class="about-img about-img-back" loading="lazy" />
-            <img src="" alt="YCAR Cars" class="about-img about-img-front" loading="lazy" />
-            <div class="about-badge">
-              <img src="https://res.cloudinary.com/ddud73mxv/image/upload/q_auto,f_auto,w_1200/Logo_ytrxrk" alt="YCAR Logo" />
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="join-leadership reveal" style="margin-top:2.5rem;">
-        <h3 class="join-leadership-title">Leadership</h3>
-        <div class="leader-mini-grid">
-
-          <div class="leader-mini-card">
-            <button class="leader-mini-toggle" aria-expanded="false">
-              <div class="leader-mini-photo">
-                <img src="https://res.cloudinary.com/ddud73mxv/image/upload/q_auto,f_auto,w_1200/president_photo_ssprkz" alt="Max Ringelstein" loading="lazy" />
-              </div>
-              <div class="leader-mini-info">
-                <span class="leader-mini-name">Max Ringelstein</span>
-                <span class="leader-mini-role">President</span>
-              </div>
-              <svg class="leader-mini-chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
-            </button>
-            <div class="leader-mini-bio">
-              <div class="leader-mini-bio-inner">
-                <div class="bio-item"><span class="bio-label">From</span><span class="bio-val">Moultonborough, NH</span></div>
-                <div class="bio-item"><span class="bio-label">Major</span><span class="bio-val">Computer Science &amp; Economics</span></div>
-                <div class="bio-item"><span class="bio-label">College</span><span class="bio-val">Silliman '28</span></div>
-                <div class="bio-item"><span class="bio-label">Dream Car</span><span class="bio-val">McLaren Senna GTR</span></div>
-                <div class="bio-item"><span class="bio-label">Fun Fact</span><span class="bio-val">Saw the Lamborghini Revuelto unveiling in Boston</span></div>
-              </div>
-            </div>
-          </div>
-
-          <div class="leader-mini-card">
-            <button class="leader-mini-toggle" aria-expanded="false">
-              <div class="leader-mini-photo">
-                <img src="https://res.cloudinary.com/ddud73mxv/image/upload/q_auto,f_auto,w_1200/vice_president_photo_xmk9tx" alt="Ezra Zbar" loading="lazy" />
-              </div>
-              <div class="leader-mini-info">
-                <span class="leader-mini-name">Ezra Zbar</span>
-                <span class="leader-mini-role">Vice President</span>
-              </div>
-              <svg class="leader-mini-chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
-            </button>
-            <div class="leader-mini-bio">
-              <div class="leader-mini-bio-inner">
-                <div class="bio-item"><span class="bio-label">From</span><span class="bio-val">New York City</span></div>
-                <div class="bio-item"><span class="bio-label">Major</span><span class="bio-val">Mechanical Engineering</span></div>
-                <div class="bio-item"><span class="bio-label">College</span><span class="bio-val">JE '28</span></div>
-                <div class="bio-item"><span class="bio-label">Dream Car</span><span class="bio-val">Mazda RX-7 FD</span></div>
-                <div class="bio-item"><span class="bio-label">Fun Fact</span><span class="bio-val">Was once tricked into believing Yale already had a car club called the Yale Automotive Appreciation Society</span></div>
-              </div>
-            </div>
-          </div>
-
-          <div class="leader-mini-card">
-            <button class="leader-mini-toggle" aria-expanded="false">
-              <div class="leader-mini-photo">
-                <img src="https://res.cloudinary.com/ddud73mxv/image/upload/q_auto,f_auto,w_1200/treasurer_photo_bxqutl" alt="Henry Wykoff" loading="lazy" />
-              </div>
-              <div class="leader-mini-info">
-                <span class="leader-mini-name">Henry Wykoff</span>
-                <span class="leader-mini-role">Treasurer</span>
-              </div>
-              <svg class="leader-mini-chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
-            </button>
-            <div class="leader-mini-bio">
-              <div class="leader-mini-bio-inner">
-                <div class="bio-item"><span class="bio-label">From</span><span class="bio-val">Nashville, Tennessee</span></div>
-                <div class="bio-item"><span class="bio-label">Major</span><span class="bio-val">Intensive Physics &amp; Math</span></div>
-                <div class="bio-item"><span class="bio-label">College</span><span class="bio-val">Silliman '28</span></div>
-                <div class="bio-item"><span class="bio-label">Dream Car</span><span class="bio-val">Lamborghini Countach</span></div>
-                <div class="bio-item"><span class="bio-label">Fun Fact</span><span class="bio-val">Builds rockets in his free time</span></div>
-              </div>
-            </div>
-          </div>
-
-          <div class="leader-mini-card">
-            <button class="leader-mini-toggle" aria-expanded="false">
-              <div class="leader-mini-photo">
-                <img src="https://res.cloudinary.com/ddud73mxv/image/upload/q_auto,f_auto,w_1200/media1_photo_wwf5ru" alt="Wyatt Lake" loading="lazy" />
-              </div>
-              <div class="leader-mini-info">
-                <span class="leader-mini-name">Wyatt Lake</span>
-                <span class="leader-mini-role">Co-Head of Media</span>
-              </div>
-              <svg class="leader-mini-chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
-            </button>
-            <div class="leader-mini-bio">
-              <div class="leader-mini-bio-inner">
-                <div class="bio-item"><span class="bio-label">From</span><span class="bio-val">Hanover, NH</span></div>
-                <div class="bio-item"><span class="bio-label">Major</span><span class="bio-val">Mechanical Engineering &amp; Economics</span></div>
-                <div class="bio-item"><span class="bio-label">College</span><span class="bio-val">Pierson '28</span></div>
-                <div class="bio-item"><span class="bio-label">Dream Car</span><span class="bio-val">Porsche 911 Turbo</span></div>
-                <div class="bio-item"><span class="bio-label">Fun Fact</span><span class="bio-val">The Yale Sandwich Guy</span></div>
-              </div>
-            </div>
-          </div>
-
-          <div class="leader-mini-card">
-            <button class="leader-mini-toggle" aria-expanded="false">
-              <div class="leader-mini-photo">
-                <img src="https://res.cloudinary.com/ddud73mxv/image/upload/q_auto,f_auto,w_1200/media2_photo_jguhuj" alt="Aiden Tuminello" loading="lazy" />
-              </div>
-              <div class="leader-mini-info">
-                <span class="leader-mini-name">Aiden Tuminello</span>
-                <span class="leader-mini-role">Co-Head of Media</span>
-              </div>
-              <svg class="leader-mini-chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
-            </button>
-            <div class="leader-mini-bio">
-              <div class="leader-mini-bio-inner">
-                <div class="bio-item"><span class="bio-label">From</span><span class="bio-val">Phoenix, AZ</span></div>
-                <div class="bio-item"><span class="bio-label">Major</span><span class="bio-val">Architecture &amp; Mechanical Engineering</span></div>
-                <div class="bio-item"><span class="bio-label">College</span><span class="bio-val">Berkeley '28</span></div>
-                <div class="bio-item"><span class="bio-label">Dream Car</span><span class="bio-val">Porsche 911 Turbo S</span></div>
-                <div class="bio-item"><span class="bio-label">Fun Fact</span><span class="bio-val">Went to Austin to watch the F1 race — big Ferrari fan</span></div>
-              </div>
-            </div>
-          </div>
-
-        </div>
-    </div>
-  </section>
-
   <!-- ── UPCOMING EVENTS ─────────────────────────────────── -->
   <section class="events" id="events">
     <div class="container">
       <div class="section-header reveal">
-        <div class="section-label-with-logo">
-          <img src="https://res.cloudinary.com/ddud73mxv/image/upload/q_auto,f_auto,w_1200/Logo_ytrxrk" alt="" class="section-logo-mark" />
-          <span class="section-label">On the Calendar</span>
-        </div>
         <h2 class="section-title">Upcoming <em>Events</em></h2>
         <p class="section-subtitle">Events open to the Yale community and beyond.</p>
         <button class="section-collapse-btn" aria-expanded="true" data-target="events-body">
@@ -377,11 +205,7 @@
   <section class="shows" id="shows">
     <div class="container">
       <div class="section-header reveal">
-        <div class="section-label-with-logo">
-          <img src="https://res.cloudinary.com/ddud73mxv/image/upload/q_auto,f_auto,w_1200/Logo_ytrxrk" alt="" class="section-logo-mark" />
-          <span class="section-label">Show Coverage</span>
-        </div>
-        <h2 class="section-title">Where We've <em>Been</em></h2>
+        <h2 class="section-title">Past <em>Events</em></h2>
         <p class="section-subtitle">Photos from every show we've attended as a club.</p>
         <button class="section-collapse-btn" aria-expanded="true" data-target="shows-body">
           <span class="collapse-label">Collapse</span>
@@ -396,64 +220,56 @@
     </div>
   </section>
 
-  <!-- ── CAMPUS CAR SPOTTING ─────────────────────────────── -->
-  <section class="campus-spots" id="campus-spots">
+  <!-- ── ABOUT ───────────────────────────────────────────── -->
+  <section class="about" id="about">
     <div class="container">
-      <div class="section-header reveal">
-        <div class="section-label-with-logo">
-          <img src="https://res.cloudinary.com/ddud73mxv/image/upload/q_auto,f_auto,w_1200/Logo_ytrxrk" alt="" class="section-logo-mark" />
-          <span class="section-label">Car Spotting</span>
+      <div class="about-inner">
+        <div class="about-text reveal-left">
+          <div class="section-label reveal">About Yale Car Club—A Student-Run Organization</div>
+          <h2 class="section-title reveal">About <em>YCAR</em></h2>
+          <p class="about-body reveal">
+            Yale Car Club was founded in 2026 to bring together students, alumni, and industry professionals around a shared interest in cars. We organize events throughout the year — from casual meetups to curated car shows — and serve as a hub for automotive culture on campus.
+          </p>
+          <p class="about-body reveal">
+            Open to everyone at Yale, regardless of what you drive or how much you know. The only requirement is an interest in cars.
+          </p>
+          <div class="about-pillars reveal">
+            <div class="pillar">
+              <div class="pillar-icon">⚙</div>
+              <div>
+                <strong>Students &amp; Alumni</strong>
+                <p>A network connecting current students with Yale graduates across the industry.</p>
+              </div>
+            </div>
+            <div class="pillar">
+              <div class="pillar-icon">◈</div>
+              <div>
+                <strong>Industry Access</strong>
+                <p>Speaker events, factory visits, and connections to professionals in automotive and motorsport.</p>
+              </div>
+            </div>
+            <div class="pillar">
+              <div class="pillar-icon">◉</div>
+              <div>
+                <strong>All Are Welcome</strong>
+                <p>Daily drivers, classics, exotics — every car and every background belongs here.</p>
+              </div>
+            </div>
+          </div>
         </div>
-        <h2 class="section-title">Campus <em>Car Spotting</em></h2>
-        <p class="section-subtitle">Interesting cars spotted on and around Yale's campus.</p>
-      </div>
-
-      <div class="campus-upload-bar reveal">
-        <p>Spotted something cool on campus? Submit a photo and it'll appear here.</p>
-        <button class="btn btn-outline" id="campus-upload-btn">
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
-          Submit a Spot
-        </button>
-      </div>
-
-      <div id="campus-gallery-wrap">
-        <div class="campus-loading" id="campus-loading">
-          <span class="campus-spinner"></span>
-        </div>
-        <div class="campus-photo-grid" id="campus-photo-grid" style="display:none"></div>
-        <div class="campus-empty-state" id="campus-empty-state" style="display:none">
-          <img src="https://res.cloudinary.com/ddud73mxv/image/upload/q_auto,f_auto,w_1200/Logo_ytrxrk" alt="YCAR" class="campus-placeholder-logo" />
-          <h3>No spots yet</h3>
-          <p>Be the first to submit a car spotted on campus.</p>
+        <div class="about-visual reveal-right">
+          <div class="about-image-stack">
+            <img src="" alt="YCAR Members" class="about-img about-img-back" loading="lazy" />
+            <img src="" alt="YCAR Cars" class="about-img about-img-front" loading="lazy" />
+            <div class="about-badge">
+              <img src="https://res.cloudinary.com/ddud73mxv/image/upload/q_auto,f_auto,w_1200/Logo_ytrxrk" alt="YCAR Logo" />
+            </div>
+          </div>
         </div>
       </div>
     </div>
+
   </section>
-
-  <!-- ── SPOT UPLOAD MODAL ─────────────────────────────────── -->
-  <dialog class="spot-modal" id="spot-modal-overlay">
-      <button class="spot-modal-close" id="spot-modal-close" aria-label="Close">&times;</button>
-      <h2 class="spot-modal-title">Submit a Spot</h2>
-      <p class="spot-modal-sub">Snap something interesting on or around Yale's campus? Share it here.</p>
-
-      <div class="spot-drop-zone" id="spot-drop-zone">
-        <input type="file" id="spot-file-input" accept="image/*" multiple />
-        <div class="spot-drop-idle" id="spot-drop-idle">
-          <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
-          <p><strong>Click or drag</strong> photos here</p>
-          <span>JPG, PNG, HEIC — up to 10 photos, max 20 MB each</span>
-        </div>
-        <div class="spot-preview-grid" id="spot-preview-grid"></div>
-      </div>
-
-      <input class="spot-caption-input" id="spot-caption-input" type="text" placeholder="Caption (optional) — make, model, where you spotted it…" maxlength="120" />
-
-      <button class="btn btn-primary spot-upload-btn" id="spot-upload-btn" disabled>
-        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
-        <span id="spot-upload-btn-text">Upload Photo</span>
-      </button>
-      <p class="spot-status" id="spot-status"></p>
-  </dialog>
 
   <!-- ── GET INVOLVED ─────────────────────────────────────── -->
   <section class="join" id="join">
@@ -541,6 +357,186 @@
     </div>
   </section>
 
+  <!-- ── LEADERSHIP ────────────────────────────────────────── -->
+  <section class="leadership-section" id="leadership">
+    <div class="container">
+      <div class="section-header reveal">
+        <h2 class="section-title">Meet the <em>Leadership</em></h2>
+      </div>
+      <div class="leader-mini-grid reveal">
+
+        <div class="leader-mini-card">
+          <button class="leader-mini-toggle" aria-expanded="false">
+            <div class="leader-mini-photo">
+              <img src="https://res.cloudinary.com/ddud73mxv/image/upload/q_auto,f_auto,w_1200/president_photo_ssprkz" alt="Max Ringelstein" loading="lazy" />
+            </div>
+            <div class="leader-mini-info">
+              <span class="leader-mini-name">Max Ringelstein</span>
+              <span class="leader-mini-role">President</span>
+            </div>
+            <svg class="leader-mini-chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <div class="leader-mini-bio">
+            <div class="leader-mini-bio-inner">
+              <div class="bio-item"><span class="bio-label">From</span><span class="bio-val">Moultonborough, NH</span></div>
+              <div class="bio-item"><span class="bio-label">Major</span><span class="bio-val">Computer Science &amp; Economics</span></div>
+              <div class="bio-item"><span class="bio-label">College</span><span class="bio-val">Silliman '28</span></div>
+              <div class="bio-item"><span class="bio-label">Dream Car</span><span class="bio-val">McLaren Senna GTR</span></div>
+              <div class="bio-item"><span class="bio-label">Fun Fact</span><span class="bio-val">Saw the Lamborghini Revuelto unveiling in Boston</span></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="leader-mini-card">
+          <button class="leader-mini-toggle" aria-expanded="false">
+            <div class="leader-mini-photo">
+              <img src="https://res.cloudinary.com/ddud73mxv/image/upload/q_auto,f_auto,w_1200/vice_president_photo_xmk9tx" alt="Ezra Zbar" loading="lazy" />
+            </div>
+            <div class="leader-mini-info">
+              <span class="leader-mini-name">Ezra Zbar</span>
+              <span class="leader-mini-role">Vice President</span>
+            </div>
+            <svg class="leader-mini-chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <div class="leader-mini-bio">
+            <div class="leader-mini-bio-inner">
+              <div class="bio-item"><span class="bio-label">From</span><span class="bio-val">New York City</span></div>
+              <div class="bio-item"><span class="bio-label">Major</span><span class="bio-val">Mechanical Engineering</span></div>
+              <div class="bio-item"><span class="bio-label">College</span><span class="bio-val">JE '28</span></div>
+              <div class="bio-item"><span class="bio-label">Dream Car</span><span class="bio-val">Mazda RX-7 FD</span></div>
+              <div class="bio-item"><span class="bio-label">Fun Fact</span><span class="bio-val">Was once tricked into believing Yale already had a car club called the Yale Automotive Appreciation Society</span></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="leader-mini-card">
+          <button class="leader-mini-toggle" aria-expanded="false">
+            <div class="leader-mini-photo">
+              <img src="https://res.cloudinary.com/ddud73mxv/image/upload/q_auto,f_auto,w_1200/treasurer_photo_bxqutl" alt="Henry Wykoff" loading="lazy" />
+            </div>
+            <div class="leader-mini-info">
+              <span class="leader-mini-name">Henry Wykoff</span>
+              <span class="leader-mini-role">Treasurer</span>
+            </div>
+            <svg class="leader-mini-chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <div class="leader-mini-bio">
+            <div class="leader-mini-bio-inner">
+              <div class="bio-item"><span class="bio-label">From</span><span class="bio-val">Nashville, Tennessee</span></div>
+              <div class="bio-item"><span class="bio-label">Major</span><span class="bio-val">Intensive Physics &amp; Math</span></div>
+              <div class="bio-item"><span class="bio-label">College</span><span class="bio-val">Silliman '28</span></div>
+              <div class="bio-item"><span class="bio-label">Dream Car</span><span class="bio-val">Lamborghini Countach</span></div>
+              <div class="bio-item"><span class="bio-label">Fun Fact</span><span class="bio-val">Builds rockets in his free time</span></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="leader-mini-card">
+          <button class="leader-mini-toggle" aria-expanded="false">
+            <div class="leader-mini-photo">
+              <img src="https://res.cloudinary.com/ddud73mxv/image/upload/q_auto,f_auto,w_1200/media1_photo_wwf5ru" alt="Wyatt Lake" loading="lazy" />
+            </div>
+            <div class="leader-mini-info">
+              <span class="leader-mini-name">Wyatt Lake</span>
+              <span class="leader-mini-role">Co-Head of Media</span>
+            </div>
+            <svg class="leader-mini-chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <div class="leader-mini-bio">
+            <div class="leader-mini-bio-inner">
+              <div class="bio-item"><span class="bio-label">From</span><span class="bio-val">Hanover, NH</span></div>
+              <div class="bio-item"><span class="bio-label">Major</span><span class="bio-val">Mechanical Engineering &amp; Economics</span></div>
+              <div class="bio-item"><span class="bio-label">College</span><span class="bio-val">Pierson '28</span></div>
+              <div class="bio-item"><span class="bio-label">Dream Car</span><span class="bio-val">Porsche 911 Turbo</span></div>
+              <div class="bio-item"><span class="bio-label">Fun Fact</span><span class="bio-val">The Yale Sandwich Guy</span></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="leader-mini-card">
+          <button class="leader-mini-toggle" aria-expanded="false">
+            <div class="leader-mini-photo">
+              <img src="https://res.cloudinary.com/ddud73mxv/image/upload/q_auto,f_auto,w_1200/media2_photo_jguhuj" alt="Aiden Tuminello" loading="lazy" />
+            </div>
+            <div class="leader-mini-info">
+              <span class="leader-mini-name">Aiden Tuminello</span>
+              <span class="leader-mini-role">Co-Head of Media</span>
+            </div>
+            <svg class="leader-mini-chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <div class="leader-mini-bio">
+            <div class="leader-mini-bio-inner">
+              <div class="bio-item"><span class="bio-label">From</span><span class="bio-val">Phoenix, AZ</span></div>
+              <div class="bio-item"><span class="bio-label">Major</span><span class="bio-val">Architecture &amp; Mechanical Engineering</span></div>
+              <div class="bio-item"><span class="bio-label">College</span><span class="bio-val">Berkeley '28</span></div>
+              <div class="bio-item"><span class="bio-label">Dream Car</span><span class="bio-val">Porsche 911 Turbo S</span></div>
+              <div class="bio-item"><span class="bio-label">Fun Fact</span><span class="bio-val">Went to Austin to watch the F1 race — big Ferrari fan</span></div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ── CAMPUS CAR SPOTTING ─────────────────────────────── -->
+  <section class="campus-spots" id="campus-spots">
+    <div class="container">
+      <div class="section-header reveal">
+        <h2 class="section-title">Campus <em>Car Spotting</em></h2>
+        <p class="section-subtitle">Interesting cars spotted on and around Yale's campus.</p>
+      </div>
+
+      <div class="campus-upload-bar reveal">
+        <p>Spotted something cool on campus? Submit a photo and it'll appear here.</p>
+        <button class="btn btn-outline" id="campus-upload-btn">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+          Submit a Spot
+        </button>
+      </div>
+
+      <div id="campus-gallery-wrap">
+        <div class="campus-loading" id="campus-loading">
+          <span class="campus-spinner"></span>
+        </div>
+        <div class="campus-photo-grid" id="campus-photo-grid" style="display:none"></div>
+        <div class="campus-load-more-wrap" id="campus-load-more-wrap" style="display:none">
+          <button class="btn btn-outline" id="campus-load-more">Load More</button>
+        </div>
+        <div class="campus-empty-state" id="campus-empty-state" style="display:none">
+          <img src="https://res.cloudinary.com/ddud73mxv/image/upload/q_auto,f_auto,w_1200/Logo_ytrxrk" alt="YCAR" class="campus-placeholder-logo" />
+          <h3>No spots yet</h3>
+          <p>Be the first to submit a car spotted on campus.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── SPOT UPLOAD MODAL ─────────────────────────────────── -->
+  <dialog class="spot-modal" id="spot-modal-overlay">
+      <button class="spot-modal-close" id="spot-modal-close" aria-label="Close">&times;</button>
+      <h2 class="spot-modal-title">Submit a Spot</h2>
+      <p class="spot-modal-sub">Snap something interesting on or around Yale's campus? Share it here.</p>
+
+      <div class="spot-drop-zone" id="spot-drop-zone">
+        <input type="file" id="spot-file-input" accept="image/*" multiple />
+        <div class="spot-drop-idle" id="spot-drop-idle">
+          <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+          <p><strong>Click or drag</strong> photos here</p>
+          <span>JPG, PNG, HEIC — up to 10 photos, max 20 MB each</span>
+        </div>
+        <div class="spot-preview-grid" id="spot-preview-grid"></div>
+      </div>
+
+      <input class="spot-caption-input" id="spot-caption-input" type="text" placeholder="Caption (optional) — make, model, where you spotted it…" maxlength="120" />
+
+      <button class="btn btn-primary spot-upload-btn" id="spot-upload-btn" disabled>
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+        <span id="spot-upload-btn-text">Upload Photo</span>
+      </button>
+      <p class="spot-status" id="spot-status"></p>
+  </dialog>
+
   <!-- ── FOOTER ──────────────────────────────────────────── -->
   <footer class="footer">
     <div class="container">
@@ -549,7 +545,7 @@
           <div class="footer-logo-disc">
             <img src="https://res.cloudinary.com/ddud73mxv/image/upload/q_auto,f_auto,w_1200/Logo_ytrxrk" alt="Yale Car Club" />
           </div>
-          <p>Yale's Premier Automotive Community</p>
+          <p>Yale Car Club—A Student-Run Organization</p>
           <p style="margin-top:0.3rem; font-size:0.72rem;">Est. 2026 · New Haven, Connecticut</p>
         </div>
         <div class="footer-links">
