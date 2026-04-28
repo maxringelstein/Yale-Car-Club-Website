@@ -56,7 +56,7 @@
 
 /* ── RESET ──────────────────────────────────────────────── */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-html { scroll-behavior: smooth; font-size: 16px; overscroll-behavior: none; overflow-anchor: none; overflow-x: hidden; }
+html { scroll-behavior: smooth; font-size: 16px; overscroll-behavior: none; overflow-anchor: none; overflow-x: hidden; max-width: 100%; }
 section[id] { scroll-margin-top: 72px; }
 body {
   background: var(--bg);
@@ -66,6 +66,8 @@ body {
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
   overscroll-behavior: none;
+  overflow-x: hidden;
+  max-width: 100%;
 }
 img { display: block; max-width: 100%; height: auto; }
 a { text-decoration: none; color: inherit; }
@@ -411,7 +413,7 @@ ul { list-style: none; }
 
 .hero-photo {
   position: absolute;
-  inset: -5%;
+  inset: -5% 0;
   background: url('https://res.cloudinary.com/ddud73mxv/image/upload/q_auto,f_auto,w_1600/main_porsche_xy3zkk') center/cover no-repeat;
   opacity: 1;
   animation: heroPan 28s ease-in-out infinite alternate;
