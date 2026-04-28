@@ -174,16 +174,22 @@ document.querySelectorAll('.section-collapse-btn').forEach(btn => {
 
 /* ── SHOOTING STAR / ZAP / BURST BACKGROUND ─── */
 (function () {
-  const hero = document.querySelector('.hero');
-  if (!hero) return;
   const canvas = document.createElement('canvas');
   canvas.id = 'zap-canvas';
-  hero.appendChild(canvas);
+  document.body.appendChild(canvas);
   const ctx = canvas.getContext('2d');
 
-  function resize() { canvas.width = hero.offsetWidth; canvas.height = hero.offsetHeight; }
+  function resize() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
   resize();
   window.addEventListener('resize', resize, { passive: true });
+
+  /* clip out the hero section (top 100svh when at scroll=0) */
+  function updateClip() {
+    const heroH = Math.max(0, window.innerHeight - window.scrollY);
+    canvas.style.clipPath = heroH > 0 ? `inset(${heroH}px 0 0 0)` : 'none';
+  }
+  updateClip();
+  window.addEventListener('scroll', updateClip, { passive: true });
 
   /* ── Shooting Star ── */
   class ShootingStar {
@@ -330,7 +336,7 @@ document.querySelectorAll('.section-collapse-btn').forEach(btn => {
   }
 
   const pool = [];
-  const TYPES = [ShootingStar, ShootingStar, Zap, Zap, Burst];
+  const TYPES = [ShootingStar, Zap, Burst, Burst, Burst, Burst];
 
   function spawnIfNeeded() {
     if (pool.length < 12 && Math.random() < 0.06) {
