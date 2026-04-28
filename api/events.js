@@ -53,10 +53,16 @@ export default async function handler(req, res) {
     const photos = resources.map(r =>
       `https://res.cloudinary.com/${CLOUD_NAME}/image/upload/q_auto,f_auto,w_1200/${r.public_id}`
     );
-    return { folder, name: formatName(folder), photos };
+    // Use the earliest upload date as a proxy for the event date
+    const earliestDate = resources.reduce((min, r) => {
+      return r.created_at && r.created_at < min ? r.created_at : min;
+    }, resources[0]?.created_at ?? '1970-01-01');
+    return { folder, name: formatName(folder), photos, date: earliestDate };
   }));
 
-  const nonEmpty = events.filter(e => e.photos.length > 0);
+  const nonEmpty = events
+    .filter(e => e.photos.length > 0)
+    .sort((a, b) => b.date.localeCompare(a.date)); // newest first
 
   res.setHeader('Cache-Control', 'public, max-age=300');
   return res.status(200).json({ events: nonEmpty });
