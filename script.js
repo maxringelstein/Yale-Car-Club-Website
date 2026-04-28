@@ -531,12 +531,7 @@ loadEvents();
 const campusPhotoGrid    = document.getElementById('campus-photo-grid');
 const campusLoading      = document.getElementById('campus-loading');
 const campusEmptyState   = document.getElementById('campus-empty-state');
-const campusLoadMoreWrap = document.getElementById('campus-load-more-wrap');
-const campusLoadMoreBtn  = document.getElementById('campus-load-more');
-
-const PAGE_SIZE = 12;
 let allCampusPhotos = [];
-let campusShown = 0;
 
 async function loadCampusSpots() {
   try {
@@ -547,9 +542,8 @@ async function loadCampusSpots() {
       campusEmptyState.style.display = 'block';
     } else {
       allCampusPhotos = data.photos;
-      campusShown = 0;
       campusPhotoGrid.style.display = 'grid';
-      showMoreCampusPhotos();
+      showAllCampusPhotos();
     }
   } catch {
     campusLoading.style.display = 'none';
@@ -557,9 +551,8 @@ async function loadCampusSpots() {
   }
 }
 
-function showMoreCampusPhotos() {
-  const batch = allCampusPhotos.slice(campusShown, campusShown + PAGE_SIZE);
-  batch.forEach(photo => {
+function showAllCampusPhotos() {
+  allCampusPhotos.forEach(photo => {
     const item = document.createElement('div');
     item.className = 'campus-photo-item';
     const img = document.createElement('img');
@@ -576,11 +569,7 @@ function showMoreCampusPhotos() {
     }
     campusPhotoGrid.appendChild(item);
   });
-  campusShown += batch.length;
-  campusLoadMoreWrap.style.display = campusShown < allCampusPhotos.length ? 'flex' : 'none';
 }
-
-campusLoadMoreBtn.addEventListener('click', showMoreCampusPhotos);
 
 /* modal wiring */
 const spotModalOverlay   = document.getElementById('spot-modal-overlay');
