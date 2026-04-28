@@ -78,31 +78,70 @@ document.querySelectorAll('.stat-number[data-count]').forEach(el => statObserver
 /* ── LIGHTBOX ─── */
 const lb = document.createElement('dialog');
 lb.className = 'lightbox';
-lb.innerHTML = `<button class="lightbox-close" aria-label="Close">&times;</button>
-                <img class="lightbox-img" src="" alt="" />`;
+lb.innerHTML = `
+  <button class="lightbox-close" aria-label="Close">&times;</button>
+  <button class="lightbox-prev" aria-label="Previous">&#8249;</button>
+  <img class="lightbox-img" src="" alt="" />
+  <button class="lightbox-next" aria-label="Next">&#8250;</button>
+  <div class="lightbox-counter"></div>
+`;
 document.body.appendChild(lb);
-const lbImg = lb.querySelector('.lightbox-img');
 
-function openLightbox(src, alt) {
-  lbImg.src = src;
-  lbImg.alt = alt || '';
+const lbImg     = lb.querySelector('.lightbox-img');
+const lbCounter = lb.querySelector('.lightbox-counter');
+const lbPrev    = lb.querySelector('.lightbox-prev');
+const lbNext    = lb.querySelector('.lightbox-next');
+let lbPhotos = [];
+let lbIndex  = 0;
+
+function lbShow(index) {
+  lbIndex = (index + lbPhotos.length) % lbPhotos.length;
+  lbImg.src = lbPhotos[lbIndex];
+  lbCounter.textContent = lbPhotos.length > 1 ? `${lbIndex + 1} / ${lbPhotos.length}` : '';
+  lbPrev.style.opacity = lbPhotos.length > 1 ? '1' : '0';
+  lbNext.style.opacity = lbPhotos.length > 1 ? '1' : '0';
+}
+
+function openLightbox(photos, index) {
+  lbPhotos = photos;
+  lbShow(index);
   lb.showModal();
 }
 function closeLightbox() {
   lb.close();
-  setTimeout(() => { lbImg.src = ''; }, 300);
+  setTimeout(() => { lbImg.src = ''; lbPhotos = []; }, 300);
 }
+
 lb.querySelector('.lightbox-close').addEventListener('click', closeLightbox);
+lbPrev.addEventListener('click', e => { e.stopPropagation(); lbShow(lbIndex - 1); });
+lbNext.addEventListener('click', e => { e.stopPropagation(); lbShow(lbIndex + 1); });
 lb.addEventListener('click', e => { if (e.target === lb) closeLightbox(); });
-document.addEventListener('keydown', e => { if (e.key === 'Escape' && lb.open) { e.preventDefault(); closeLightbox(); } });
+document.addEventListener('keydown', e => {
+  if (!lb.open) return;
+  if (e.key === 'Escape')      { e.preventDefault(); closeLightbox(); }
+  if (e.key === 'ArrowLeft')   lbShow(lbIndex - 1);
+  if (e.key === 'ArrowRight')  lbShow(lbIndex + 1);
+});
+
+let lbTouchX = null;
+lb.addEventListener('touchstart', e => { lbTouchX = e.touches[0].clientX; }, { passive: true });
+lb.addEventListener('touchend', e => {
+  if (lbTouchX === null) return;
+  const dx = e.changedTouches[0].clientX - lbTouchX;
+  if (Math.abs(dx) > 40) lbShow(lbIndex + (dx < 0 ? 1 : -1));
+  lbTouchX = null;
+}, { passive: true });
 
 function attachLightbox(img) {
   img.style.cursor = 'zoom-in';
   img.addEventListener('click', e => {
     e.preventDefault();
     e.stopPropagation();
+    const block = img.closest('.show-block');
+    const photos = block?._eventPhotos ?? [img.src || img.dataset.src];
     const src = img.src || img.dataset.src;
-    if (src) openLightbox(src, img.alt);
+    const index = photos.indexOf(src);
+    openLightbox(photos, index >= 0 ? index : 0);
   });
 }
 document.querySelectorAll(
@@ -396,6 +435,7 @@ function buildShowBlock(event) {
 
   const block = document.createElement('div');
   block.className = 'show-block reveal';
+  block._eventPhotos = event.photos;
   block.innerHTML = `
     <div class="show-header-row">
       <div class="show-logo-wrap"><img src="${LOGO_URL}" alt="YCAR" /></div>
