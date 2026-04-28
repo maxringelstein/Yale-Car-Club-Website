@@ -174,12 +174,14 @@ document.querySelectorAll('.section-collapse-btn').forEach(btn => {
 
 /* ── SHOOTING STAR / ZAP / BURST BACKGROUND ─── */
 (function () {
+  const hero = document.querySelector('.hero');
+  if (!hero) return;
   const canvas = document.createElement('canvas');
   canvas.id = 'zap-canvas';
-  document.body.appendChild(canvas);
+  hero.appendChild(canvas);
   const ctx = canvas.getContext('2d');
 
-  function resize() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
+  function resize() { canvas.width = hero.offsetWidth; canvas.height = hero.offsetHeight; }
   resize();
   window.addEventListener('resize', resize, { passive: true });
 
@@ -192,7 +194,7 @@ document.querySelectorAll('.section-collapse-btn').forEach(btn => {
       this.angle = 0.35 + Math.random() * 0.5;
       this.speed = 5 + Math.random() * 8;
       this.len = 100 + Math.random() * 180;
-      this.maxOpa = 0.18 + Math.random() * 0.22;
+      this.maxOpa = 0.07 + Math.random() * 0.08;
       this.opacity = 0; this.phase = 'in'; this.alive = true;
     }
     update() {
@@ -246,7 +248,7 @@ document.querySelectorAll('.section-collapse-btn').forEach(btn => {
         }
         x = nx; y = ny;
       }
-      this.maxOpa = 0.15 + Math.random() * 0.20;
+      this.maxOpa = 0.06 + Math.random() * 0.07;
       this.opacity = 0; this.phase = 'in';
       this.hold = 0; this.holdMax = 4 + Math.floor(Math.random() * 10);
       this.alive = true;
@@ -290,7 +292,7 @@ document.querySelectorAll('.section-collapse-btn').forEach(btn => {
         const len = 18 + Math.random() * 45;
         return { a: base, len, offLen: Math.random() * 0.4 };
       });
-      this.maxOpa = 0.18 + Math.random() * 0.22;
+      this.maxOpa = 0.07 + Math.random() * 0.07;
       this.opacity = 0; this.phase = 'in';
       this.hold = 0; this.holdMax = 3 + Math.floor(Math.random() * 6);
       this.alive = true;
@@ -331,7 +333,7 @@ document.querySelectorAll('.section-collapse-btn').forEach(btn => {
   const TYPES = [ShootingStar, ShootingStar, Zap, Zap, Burst];
 
   function spawnIfNeeded() {
-    if (pool.length < 18 && Math.random() < 0.07) {
+    if (pool.length < 8 && Math.random() < 0.04) {
       const T = TYPES[Math.floor(Math.random() * TYPES.length)];
       const e = new T(); e.reset(); pool.push(e);
     }
