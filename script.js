@@ -494,7 +494,7 @@ const campusEmptyState   = document.getElementById('campus-empty-state');
 const campusLoadMoreWrap = document.getElementById('campus-load-more-wrap');
 const campusLoadMoreBtn  = document.getElementById('campus-load-more');
 
-const PAGE_SIZE = 6;
+const PAGE_SIZE = 12;
 let allCampusPhotos = [];
 let campusShown = 0;
 
