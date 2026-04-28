@@ -1356,17 +1356,17 @@ ul { list-style: none; }
   flex-direction: column;
   align-items: center;
   width: 100%;
-  padding: 1.8rem 1.2rem 1.4rem;
+  padding: 2.5rem 1.8rem 2rem;
   background: none;
   border: none;
   cursor: pointer;
   text-align: center;
-  gap: 0.85rem;
+  gap: 1.1rem;
 }
 
 .leader-mini-photo {
-  width: 110px;
-  height: 110px;
+  width: 220px;
+  height: 220px;
   border-radius: 50%;
   overflow: hidden;
   border: 2px solid var(--border-blue);
@@ -1389,7 +1389,7 @@ ul { list-style: none; }
   gap: 0.2rem;
 }
 .leader-mini-name {
-  font-size: 1rem;
+  font-size: 1.15rem;
   font-weight: 600;
   color: var(--white);
   line-height: 1.2;
@@ -1635,7 +1635,7 @@ ul { list-style: none; }
 /* ── RESPONSIVE ─────────────────────────────────────────── */
 @media (max-width: 1024px) {
   .leader-mini-grid { grid-template-columns: repeat(3, 1fr); }
-  .leader-mini-photo { width: 90px; height: 90px; }
+  .leader-mini-photo { width: 180px; height: 180px; }
   .leader-card { flex: 0 1 280px; }
   .about-inner { gap: 4rem; }
   .events-grid { grid-template-columns: 1fr; }
@@ -1651,8 +1651,8 @@ ul { list-style: none; }
 
 @media (max-width: 768px) {
   .leader-mini-grid { grid-template-columns: repeat(2, 1fr); }
-  .leader-mini-photo { width: 84px; height: 84px; }
-  .leader-mini-toggle { padding: 1.2rem 0.75rem 0.9rem; }
+  .leader-mini-photo { width: 168px; height: 168px; }
+  .leader-mini-toggle { padding: 1.6rem 1rem 1.2rem; }
   .show-mini-strip {
     display: flex;
     overflow-x: auto;
