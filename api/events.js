@@ -44,7 +44,7 @@ export default async function handler(req, res) {
         headers: jsonHdr,
         body: JSON.stringify({
           expression: `asset_folder="${folder}"`,
-          sort_by: [{ created_at: 'asc' }],
+          sort_by: [{ public_id: 'asc' }],
           max_results: 50,
         }),
       }
