@@ -194,7 +194,7 @@ document.querySelectorAll('.section-collapse-btn').forEach(btn => {
       this.angle = 0.35 + Math.random() * 0.5;
       this.speed = 5 + Math.random() * 8;
       this.len = 100 + Math.random() * 180;
-      this.maxOpa = 0.07 + Math.random() * 0.08;
+      this.maxOpa = 0.13 + Math.random() * 0.14;
       this.opacity = 0; this.phase = 'in'; this.alive = true;
     }
     update() {
@@ -248,7 +248,7 @@ document.querySelectorAll('.section-collapse-btn').forEach(btn => {
         }
         x = nx; y = ny;
       }
-      this.maxOpa = 0.06 + Math.random() * 0.07;
+      this.maxOpa = 0.10 + Math.random() * 0.12;
       this.opacity = 0; this.phase = 'in';
       this.hold = 0; this.holdMax = 4 + Math.floor(Math.random() * 10);
       this.alive = true;
@@ -292,7 +292,7 @@ document.querySelectorAll('.section-collapse-btn').forEach(btn => {
         const len = 18 + Math.random() * 45;
         return { a: base, len, offLen: Math.random() * 0.4 };
       });
-      this.maxOpa = 0.07 + Math.random() * 0.07;
+      this.maxOpa = 0.12 + Math.random() * 0.13;
       this.opacity = 0; this.phase = 'in';
       this.hold = 0; this.holdMax = 3 + Math.floor(Math.random() * 6);
       this.alive = true;
@@ -333,7 +333,7 @@ document.querySelectorAll('.section-collapse-btn').forEach(btn => {
   const TYPES = [ShootingStar, ShootingStar, Zap, Zap, Burst];
 
   function spawnIfNeeded() {
-    if (pool.length < 8 && Math.random() < 0.04) {
+    if (pool.length < 12 && Math.random() < 0.06) {
       const T = TYPES[Math.floor(Math.random() * TYPES.length)];
       const e = new T(); e.reset(); pool.push(e);
     }
