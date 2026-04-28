@@ -1713,11 +1713,35 @@ ul { list-style: none; }
 @media (max-width: 480px) {
   .leader-card { flex: 0 0 100%; }
   .container { padding: 0 1.25rem; }
-  .hero-title { font-size: clamp(1.5rem, 7.5vw, 2.75rem); }
-  .hero-content { padding: 0 1.25rem; max-width: 100vw; }
   .about, .events, .leadership, .join, .gallery { padding: 5rem 0; }
   .travel-grid { grid-template-columns: 1fr; }
   .gallery-grid { grid-template-columns: 1fr 1fr; grid-auto-rows: 150px; }
+
+  /* ── HERO: push title down, make it bigger ── */
+  .hero { align-items: flex-start; }
+  .hero-content {
+    padding: 26vh 1.5rem 0;
+    width: 100%;
+    max-width: 100%;
+  }
+  .hero-title {
+    font-size: clamp(2.4rem, 11.5vw, 3.5rem);
+    margin-bottom: 0.6rem;
+    letter-spacing: -0.01em;
+  }
+  .hero-sub {
+    font-size: 0.6rem;
+    letter-spacing: 0.14em;
+    margin-bottom: 1.75rem;
+  }
+  .hero-actions {
+    margin-bottom: 2.25rem;
+    gap: 0.65rem;
+  }
+  .hero-stats {
+    gap: 1.5rem;
+    padding-top: 1.25rem;
+  }
 }
 
 /* ── LIGHTBOX ───────────────────────────────────────────── */
