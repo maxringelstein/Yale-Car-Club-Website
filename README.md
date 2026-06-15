@@ -17,6 +17,9 @@ Yale Car Club was founded in 2026 to bring together students, alumni, and indust
 ## Tech Stack
 `HTML` · `CSS` · `JavaScript` · `Cloudinary` (image hosting) · `Vercel` (deployment)
 
+## Development
+This was my first project built with the assistance of [Claude](https://claude.ai), Anthropic's AI assistant.
+
 ## Links
 - 🌐 Website: [yalecarclub.com](https://www.yalecarclub.com)
 - 📸 Instagram: [@yalecarclub](https://instagram.com/yalecarclub)
