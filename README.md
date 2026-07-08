@@ -1,6 +1,6 @@
-# Yale Car Club — Official Website
+# Yale Car Club Website (Claude Code in Practice)
 
-The official website for Yale Car Club, a student-run automotive community at Yale University. Built and maintained by the club's leadership.
+The official website for Yale Car Club, a student-run automotive community at Yale University. 
 
 🌐 **Live site:** [yalecarclub.com](https://www.yalecarclub.com)
 
